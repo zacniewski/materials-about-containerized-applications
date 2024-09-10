@@ -2,7 +2,7 @@
 
 W tym ćwiczeniu poznamy podstawy pobierania obrazów, uruchamiania, zatrzymywania i usuwania kontenerów.
 
-### Pbieranie obrazu
+### Pobieranie obrazu
 
 Aby uruchomić kontenery, najpierw musimy pobrać kilka obrazów.
 
@@ -13,9 +13,9 @@ Aby uruchomić kontenery, najpierw musimy pobrać kilka obrazów.
     REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
     ```
 
-2. On a fresh Docker installation, we should have no images. Let's pull one from Dockerhub.
+2. Dla świeżej instalacji Dockera nie powinniśmy mieć obrazów. Pobierzmy jeden z Dockerhub.
 
-    We usually pull images from DockerHub by tag. These look like:
+    Zazwyczaj pobieramy obrazy z DockerHub według tagu. Mogą wyglądać następująco:
 
     ```
     # Official Docker images
@@ -30,46 +30,41 @@ Aby uruchomić kontenery, najpierw musimy pobrać kilka obrazów.
     # bitnami/rails:latest
     ```
 
-    We can search for images using `docker search <keyword>`
+    Możemy wyszukiwać obrazy za pomocą `docker search <keyword>`
 
     ```
     $ docker search ubuntu
-    NAME                                         DESCRIPTION                                     STARS     OFFICIAL   AUTOMATED
-    ubuntu                                       Ubuntu is a Debian-based Linux operating s...   5582      [OK]       
-    rastasheep/ubuntu-sshd                       Dockerized SSH service, built on top of of...   73                   [OK]
-    ubuntu-upstart                               Upstart is an event-based replacement for ...   70        [OK]       
-    consol/ubuntu-xfce-vnc                       Ubuntu container with "headless" VNC sessi...   43                   [OK]
-    ubuntu-debootstrap                           debootstrap --variant=minbase --components...   27        [OK]       
+    NAME                             DESCRIPTION                                     STARS     OFFICIAL
+    ubuntu                           Ubuntu is a Debian-based Linux operating sys…   17252     [OK]
+    ubuntu/chiselled-jre             [MOVED TO ubuntu/jre] Chiselled JRE: distrol…   3         
+    ubuntu/python                    A chiselled Ubuntu rock with the Python runt…   12        
+    ubuntu/mimir                     Ubuntu ROCK for Mimir, a horizontally scalab…   0         
+    ubuntu/dotnet-deps               Chiselled Ubuntu for self-contained .NET & A…   16        
+    ubuntu/dotnet-aspnet             Chiselled Ubuntu runtime image for ASP.NET a…   22        
     ```
 
-    You can also find images online at [DockerHub](https://hub.docker.com/).
+    Można również znaleźć obrazy online na [DockerHub](https://hub.docker.com/).
 
-    Run `docker pull ubuntu:16.04` to pull an image of Ubuntu 16.04 from DockerHub.
-
-    ```
-    $ docker pull ubuntu:16:04
-    16.04: Pulling from library/ubuntu
-    8aec416115fd: Pull complete 
-    695f074e24e3: Pull complete 
-    946d6c48c2a7: Pull complete 
-    bc7277e579f0: Pull complete 
-    2508cbcde94b: Pull complete 
-    Digest: sha256:71cd81252a3563a03ad8daee81047b62ab5d892ebbfbf71cf53415f29c130950
-    Status: Downloaded newer image for ubuntu:16.04
-    ```
-3. We can also pull different versions on the same image.
-
-    Run `docker pull ubuntu:16.10` to pull an image of Ubuntu 16.10.
+    Uruchom `docker pull ubuntu:22.04` żeby pobrać obraz Ubuntu 22.04 z DockerHub.
 
     ```
-    16.10: Pulling from library/ubuntu
-    3a635c0fcefb: Pull complete 
-    bf3f7e9b4869: Pull complete 
-    ad323864e1f8: Pull complete 
-    b4d3fc870200: Pull complete 
-    4e69d6ff0e56: Pull complete 
-    Digest: sha256:609c1726180221d95a66ce3ed1e898f4a543c5be9ff3dbb1f10180a6cb2a6fdc
-    Status: Downloaded newer image for ubuntu:16.10
+    $ docker pull ubuntu:22:04
+    22.04: Pulling from library/ubuntu
+    857cc8cb19c0: Pull complete 
+    Digest: sha256:adbb90115a21969d2fe6fa7f9af4253e16d45f8d4c1e930182610c4731962658
+    Status: Downloaded newer image for ubuntu:22.04
+    docker.io/library/ubuntu:22.04
+    ```
+3. Możemy również pobrać różne wersje tego samego obrazu.
+
+    Run `docker pull ubuntu:22.10` to pull an image of Ubuntu 22.10.
+
+    ```
+    22.10: Pulling from library/ubuntu
+    3ad6ea492c35: Pull complete 
+    Digest: sha256:e322f4808315c387868a9135beeb11435b5b83130a8599fd7d0014452c34f489
+    Status: Downloaded newer image for ubuntu:22.10
+    docker.io/library/ubuntu:22.10
     ```
 
     Then when we run `docker images again, we should get:
