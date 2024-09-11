@@ -67,7 +67,7 @@ Aby uruchomić kontenery, najpierw musimy pobrać kilka obrazów.
     docker.io/library/ubuntu:22.10
     ```
 
-    Potem, kiedy znów uruchomimy `docker images` znowu, powinniśmy dostać:
+    Potem, kiedy znów uruchomimy `docker images` znowu, powinniśmy otrzymać:
 
     ```
     REPOSITORY   TAG       IMAGE ID       CREATED         SIZE
@@ -116,7 +116,7 @@ Polecenie może być wszystkim, co chcesz, o ile istnieje w pobranym obrazie.
 W przypadku obrazu Ubuntu jest to jądro Linuksa z wieloma typowymi aplikacjami, które można znaleźć w podstawowym środowisku Linux.
 
 1.  Zróbmy bardzo prosty przykład. Uruchom `docker run ubuntu:22.04 /bin/echo 'Hello world!'`
-    Jeśli usunęliśmy obraz wcześniej, to zostanie on na nowo pobrany
+    Jeśli usunęliśmy obraz wcześniej, to zostanie on na nowo pobrany.
 
     ```
     $ docker run ubuntu:22.04 /bin/echo 'Hello world!'
@@ -128,89 +128,99 @@ W przypadku obrazu Ubuntu jest to jądro Linuksa z wieloma typowymi aplikacjami,
     Hello world!
     ```
 
-    The `/bin/echo` command is a really simple application that just prints whatever you give it to the terminal. We passed it 'Hello world!', so it prints `Hello world!` to the terminal.
+    Komenda `/bin/echo` pozwala wyświetlić jej argument(y) w terminalu. 
+    W powyższym przypadku argumentem jest 'Hello world!' i tenże tekst zostaje wyświetlony w terminalu.
 
-    When you run the whole `docker run` command, it creates a new container from the image specified, then runs the command inside the container. From the previous example, the Docker container started, then ran the `/bin/echo` command in the container.
+    Gdy uruchamiamy komendę `docker run`, tworzony jest nowy kontener z wyszczególnionego obrazu, 
+    a następnie uruchamiana jest określona komenda wewnątrz kontenera. 
+    Kontener został uruchomiony, a w nim komenda `/bin/echo` z argumentami.
 
-2. Let's check what containers we have after running this. Run `docker ps`
+2. Sprawdźmy, jakie mamy kontenery za pomocą komendy `docker ps`:  
 
     ```
     $ docker ps
     CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
     ```
 
-    That's strange: no containers right? The `ps` command doesn't show stopped containers by default, add the `-a` flag.
+    Brak kontenerów? Komenda `ps` domyślnie nie pokazuje zatrzymanych konteneróws.
+    Zeby zobaczyć wszystkie kontenery dodajemy flagę `-a`.
 
     ```
     $ docker ps -a
-    CONTAINER ID        IMAGE               COMMAND                  CREATED              STATUS                          PORTS               NAMES
-    4fc37e27944a        ubuntu:16.04        "/bin/echo 'Hello ..."   About a minute ago   Exited (0) About a minute ago                       zen_swartz
+    CONTAINER ID   IMAGE          COMMAND                  CREATED          STATUS                      PORTS     NAMES
+    7ed5e2746181   ubuntu:22.04   "/bin/echo 'Hello wo…"   18 minutes ago   Exited (0) 18 minutes ago             heuristic_bhaskara
     ```
 
-    Okay, there's our container. But why is the status "Exited"?
+    Jest nasz kontener, ale dlaczego ma status "Exited"?
+    Z dokumentacji:  
+    >Docker containers only run as long as the command it starts with is running.
+    
+    W naszym przypadku kontener uruchomił komendę `/bin/echo`, wyświetlił jej argumenty w terminalu, a następnie zakończył działanie (został zatrzymany) z kodem statusowym '0' (brak błędów).
 
-    *Docker containers only run as long as the command it starts with is running.* In our example, it ran `/bin/echo` successfully, printed some output, then exited with status code 0 (which means no errors.) When Docker saw this command exit, the container stopped.
-
-3. Let's do something a bit more interactive. Run `docker run ubuntu:16.04 /bin/bash`
+3. Trochę interaktywności. Uruchom `docker run ubuntu:22.04 /bin/bash`
 
     ```
-    $ docker run ubuntu:16.04 /bin/bash
+    $ docker run ubuntu:22.04 /bin/bash
     $
     ```
 
-    Notice nothing happened. When we run `docker ps -a`
+    Nic specjalnego się nie wydarzyło ...
 
     ```
     $ docker ps -a
-    CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                     PORTS               NAMES
-    654792eb403b        ubuntu:16.04        "/bin/bash"         4 seconds ago       Exited (0) 2 seconds ago                       distracted_minsky
+    CONTAINER ID   IMAGE          COMMAND                  CREATED          STATUS                      PORTS     NAMES
+    8ce9e62ee76c   ubuntu:22.04   "/bin/bash"              15 seconds ago   Exited (0) 15 seconds ago             gifted_jemison
+    7ed5e2746181   ubuntu:22.04   "/bin/echo 'Hello wo…"   25 minutes ago   Exited (0) 25 minutes ago             heuristic_bhaskara
     ```
 
-    The container exited instantly. Why? We were running the `/bin/bash` command, which is an interactive program. However, the `docker run` command doesn't run interactively by default, therefore the `/bin/bash` command exited, and the container stopped.
+    Kontener zakończył działanie natychmiastowo. Dlaczego? 
+    Uruchomiona została komenda `/bin/bash`, ale `docker run` domyślnie nie uruchamia się interaktywnie, dlatego komenda `/bin/bash` się zakończyła, a kontener się zatrzymał.
 
-    Instead, let's add the `-it` flags, which tells Docker to run the command interactively with your terminal.
-
-    ```
-    $ docker run -it ubuntu:16.04 /bin/bash
-    root@5fa68739793c:/# 
-    ```
-
-    This looks a lot better. This means you're in a BASH session inside the Ubuntu container. Notice you're running as `root` and the container ID that follows.
-
-    You can now use this like a normal Linux shell. Try `pwd` and `ls` to look at the file system.
+    Zamiast tego, dodajmy flagi `-it`, które mówią Dockerowi aby uruchmił komendę interaktywnie z użyciem terminala.
 
     ```
-    root@5fa68739793c:/# pwd
+    $ docker run -it ubuntu:22.04 /bin/bash
+    root@94ff3d83e360:/# 
+    ```
+
+    Teraz lepiej... Jesteśmy w sesji BASH wewnątrz naszego kontenera Ubuntu. 
+    Użytkownik to `root` i widzimy również ID kontenera.
+
+    Możemy działać jak w standardowej powłoce Linuxa. Np. używająć komend `pwd` i `ls`.
+
+    ```
+    root@94ff3d83e360:/# pwd
     /
-    root@5fa68739793c:/# ls
-    bin  boot  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+    root@94ff3d83e360:/# ls
+    bin  boot  dev  etc  home  lib  lib32  lib64  libx32  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
     ```
 
-    You can type `exit` to end the BASH session, terminating the command and stopping the container.
+    Komenda `exit` kończy sesję BASH i zatrzymuje kontener.
 
     ```
-    root@5fa68739793c:/# exit
+    root@94ff3d83e360:/# exit
     exit
     $
     ```
-4. By default your terminal remains attached to the container when you run `docker run`. What if you don't want to remain attached?
+4. Domyślnie Twój terminal pozostaje "przywiązany" (ang. attached) do kontenera, gdy uruchamiasz komendę `docker run`. 
+   Co jeśli tego nie chcesz?
 
-    By adding the `-d` flag, we can run in detached mode, meaning the container will continue to run as long as the command is, but it won't print the output.
+    Przez dodanie flagi `-d`, uruchamiamy kontener w trybie "detached", co oznacza że kontener będzie działał tak długo jak wykonywana jest określona komenda, ale nie będzie wyświetlał nic na standardowym wyjściu.
 
-    Let's run `/bin/sleep 3600`, which will run the container idly for 1 hour:
+    Uruchomimy komendę `/bin/sleep 3600`, która powoduje działanie kontenera (oczekiwanie godzinę w trybie "idle"):
 
     ```
-    $ docker run -d ubuntu:16.04 /bin/sleep 3600
-    be730b8c554b69383f30f71222b9ac264367c7454790dc2a4eb0cda33c0baa2a
+    $ docker run -d ubuntu:22.04 /bin/sleep 3600
+      44c6bab63669624f080f4044e4a47465204c2351d46a1e8b5df0f255973eccb4
     $
     ```
 
-    If we check the container, we can see it's running the sleep command in a new container.
+    Po sprawdzeniu widać, że uruchomiona jest komenda `sleep` w nowym kontenerze.
 
     ```
     $ docker ps
-    CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
-    be730b8c554b        ubuntu:16.04        "/bin/sleep 3600"    41 seconds ago      Up 40 seconds                           jovial_goldstine
+      CONTAINER ID   IMAGE          COMMAND             CREATED         STATUS         PORTS     NAMES
+      44c6bab63669   ubuntu:22.04   "/bin/sleep 3600"   3 minutes ago   Up 3 minutes             romantic_ptolemy
     $
     ```
 
