@@ -1,7 +1,9 @@
-## Oryginalne repozytorium
+## Docker training (wersja PL, 2024 r.)
+
+###  Oryginalne repozytorium
   - [docker-training](https://github.com/delner/docker-training/tree/master) by [David Elner](https://github.com/delner).  
 
-### Podstawowe ćwiczenia Exercises
+### Podstawowe ćwiczenia
 
 1. [Zarządzanie obrazami i kontenerami w Dockerze](1-running-containers.md)
 2. [Changing images](https://github.com/delner/docker-training/blob/master/exercises/basic/2-changing_images/README.md)

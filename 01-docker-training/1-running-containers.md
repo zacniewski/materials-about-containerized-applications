@@ -1,4 +1,4 @@
-# Exercise 1: Running containers
+# Ćwiczenie nr 1: Uruchamianie kontenerów
 
 W tym ćwiczeniu poznamy podstawy pobierania obrazów, uruchamiania, zatrzymywania i usuwania kontenerów.
 
@@ -20,7 +20,7 @@ Aby uruchomić kontenery, najpierw musimy pobrać kilka obrazów.
     ```
     # Official Docker images
     <repo>:<tag>
-    # ubuntu:16.04
+    # ubuntu:22.04
     # elasticsearch:5.2
     # nginx:latest
 
@@ -67,55 +67,64 @@ Aby uruchomić kontenery, najpierw musimy pobrać kilka obrazów.
     docker.io/library/ubuntu:22.10
     ```
 
-    Then when we run `docker images again, we should get:
+    Potem, kiedy znów uruchomimy `docker images` znowu, powinniśmy dostać:
 
     ```
-    REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
-    ubuntu              16.10               31005225a745        4 weeks ago         103 MB
-    ubuntu              16.04               f49eec89601e        4 weeks ago         129 MB
+    REPOSITORY   TAG       IMAGE ID       CREATED         SIZE
+    ubuntu       22.04     53a843653cbc   4 weeks ago     77.9MB
+    ubuntu       22.10     692eb4a905c0   14 months ago   70.3MB
     ```
 
-4. Over time, your machine can collect a lot of images, so it's nice to remove unwanted images.
-
-    Run `docker rmi <IMAGE ID>` to remove the Ubuntu 16.10 image we won't be using.
+4. Z biegiem czasu możemy zgromadzić zbierać wiele obrazów, więc dobrze jest usunąć te niechciane.
+   Uruchom `docker rmi <IMAGE ID>`, aby np. usunąć obraz Ubuntu 22.10, z którego nie będziesz korzystać.
 
     ```
-    $ docker rmi 31005225a745
-    Untagged: ubuntu:16.10
-    Untagged: ubuntu@sha256:609c1726180221d95a66ce3ed1e898f4a543c5be9ff3dbb1f10180a6cb2a6fdc
-    Deleted: sha256:31005225a74578ec48fbe5a833ef39a3e41ebcbf0714ad3867070405b3efd81e
-    Deleted: sha256:c9fcffc56240d2382f78da3130215afcfc7130b29210184f30ffce3a3eae677d
-    Deleted: sha256:7a8ffa53e9616698d138da12474f8f7441f00e129bb06c7f12b9264828bcad1e
-    Deleted: sha256:c71fbd03fa070b80919b1712f7b335829fecd0157915cf4b60775988c18a5687
-    Deleted: sha256:3b1d2c1b8ae337cacea8271862bded89d920bbbf5049fa1b4927169cb3b3974c
-    Deleted: sha256:6b720ab3505cb593509654fac976193e75bc881d9c72abdffe4c29278396c636
+    $ docker rmi 692eb4a905c0
+    Untagged: ubuntu:22.10
+    Untagged: ubuntu@sha256:e322f4808315c387868a9135beeb11435b5b83130a8599fd7d0014452c34f489
+    Deleted: sha256:692eb4a905c074054e0a35d647671f0e32ed150d15b23fd7bc745cfb2fdeddbd
+    Deleted: sha256:1e8bb0620308641104e68d66f65c1e51de68d7df7240b8a99a251338631c6911
     ```
 
-    Alternatively, you can delete images by tag or by a partial image ID. In the previous example, the following would have been equivalent:
+    Alternatywnie możesz usunąć obrazy po tagu lub za pomocą częściowego identyfikatora obrazu. 
+    Dla poprzedniego przykładu, poniższe komendy byłyby równoważne:  
+     - `docker rmi 69`
+     - `docker rmi ubuntu:22.10`
 
-     - `docker rmi 31`
-     - `docker rmi ubuntu:16.10`
-
-    Running `docker images` should reflect the deleted image.
+    Uruchomienie `docker images` powinno odzwierciedlić zmiany po usuniętym obrazie.
 
     ```
     $ docker images
-    REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
-    ubuntu              16.04               f49eec89601e        4 weeks ago         129 MB
+    REPOSITORY   TAG       IMAGE ID       CREATED       SIZE
+    ubuntu       22.04     53a843653cbc   4 weeks ago   77.9MB
     ```
 
-    A nice shortcut for removing all images from your system is `docker rmi $(docker images -a -q)`
+    Skrót do usuwania wszystkich obrazów z systemu to `docker rmi $(docker images -a -q)`
+    ```
+    $ docker rmi $(docker images -a -q)
+    Untagged: ubuntu:22.04
+    Untagged: ubuntu@sha256:adbb90115a21969d2fe6fa7f9af4253e16d45f8d4c1e930182610c4731962658
+    Deleted: sha256:53a843653cbcd9e10be207e951d907dc2481d9c222de57d24cfcac32e5165188
+    Deleted: sha256:1b9b7346fee7abbc7f5538eaa23548bd05a45abe8daf6794024be0c8ad7d60bb
+    ```
 
-### Running our container
+### Uruchamianie kontenera
 
-Using the Ubuntu 16.04 image we downloaded, we can run a our first container. Unlike a traditional virtualization framework like VirtualBox or VMWare, we can't just start a virtual machine running this image without anything else: we have to give it a command to run.
+Korzystając z pobranego przez nas obrazu Ubuntu 22.04, możemy uruchomić nasz pierwszy kontener. 
+W przeciwieństwie do tradycyjnego frameworka wirtualizacji, takiego jak VirtualBox czy VMWare, nie możemy po prostu uruchomić maszyny wirtualnej z systemem uruchamianym tym obrazem bez niczego innego: musimy dać mu polecenie uruchomienia.
+Polecenie może być wszystkim, co chcesz, o ile istnieje w pobranym obrazie. 
+W przypadku obrazu Ubuntu jest to jądro Linuksa z wieloma typowymi aplikacjami, które można znaleźć w podstawowym środowisku Linux.
 
-The command can be anything you want, as long as it exists on the image. In the case of the Ubuntu image, it's a Linux kernel with many of the typical applications you'd find in a basic Linux environment.
-
-1. Let's do a very simple example. Run `docker run ubuntu:16.04 /bin/echo 'Hello world!'`
+1.  Zróbmy bardzo prosty przykład. Uruchom `docker run ubuntu:22.04 /bin/echo 'Hello world!'`
+    Jeśli usunęliśmy obraz wcześniej, to zostanie on na nowo pobrany
 
     ```
-    $ docker run ubuntu:16.04 /bin/echo 'Hello world!'
+    $ docker run ubuntu:22.04 /bin/echo 'Hello world!'
+    Unable to find image 'ubuntu:22.04' locally
+    22.04: Pulling from library/ubuntu
+    857cc8cb19c0: Pull complete 
+    Digest: sha256:adbb90115a21969d2fe6fa7f9af4253e16d45f8d4c1e930182610c4731962658
+    Status: Downloaded newer image for ubuntu:22.04
     Hello world!
     ```
 
