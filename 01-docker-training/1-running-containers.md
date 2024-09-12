@@ -12,7 +12,7 @@ To run containers, we'll first need to pull some images.
     $ docker images
     REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
     ```
-    :exclamation: Wymagany screenshot!
+    :exclamation: **Wymagany screenshot!**
 
 2. On a fresh Docker installation, we should have no images. Let's pull one from Dockerhub.
 
