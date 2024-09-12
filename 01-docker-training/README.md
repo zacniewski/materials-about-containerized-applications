@@ -17,3 +17,8 @@
 
 
 ### Zadania do realizacji
+  - należy przeanalizować wszystkie ćwiczenia, wykonując na swoim komputerze wszystkie wyszczególnione komendy,
+  - wszędzie tam, gdzie napisane jest 'wymagany screenshot XY', należy dokonać zapisu bieżącego stanu terminala poprzez tzw. screenshot, a plik ze zrzutem ekranu nazwać `XY.png`, gdzie XY to wyszczególniony numer,  
+  - na zrzucie ekranu powinien znajdować się informacja o danym użytkowniku, idealnie gdyby był to numer indeksu,  
+  - można np. nazwać folder roboczy `kontenery-123456`, gdzie `123456` to numer indeksu :smiley:,  
+  - ww. plik umieszczamy w pliku `README.md`, dotyczącym danego ćwiczenia, wraz z krótkim poprzedzającym go opisem, np. 'Lista wszystkich kontenerów', itp.  
