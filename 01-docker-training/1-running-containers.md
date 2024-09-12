@@ -1,27 +1,28 @@
-# Ćwiczenie nr 1: Uruchamianie kontenerów
+# Exercise 1: Running containers
 
-W tym ćwiczeniu poznamy podstawy pobierania obrazów, uruchamiania, zatrzymywania i usuwania kontenerów.
+In this exercise, we'll learn the basics of pulling images, starting, stopping, and removing containers.
 
-### Pobieranie obrazu
+### Pulling an image
 
-Aby uruchomić kontenery, najpierw musimy pobrać kilka obrazów.
+To run containers, we'll first need to pull some images.
 
-1. Zobaczmy, jakie obrazy mamy obecnie na naszej maszynie, poprzez komendę `docker images` lub `sudo docker images` (w zależności od konfiguracji):
+1. Let's see what images we have currently on our machine, by running `docker images`:
 
     ```
     $ docker images
     REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
     ```
+    :exclamation: Wymagany screenshot!
 
-2. Dla świeżej instalacji Dockera nie powinniśmy mieć obrazów. Pobierzmy jeden z Dockerhub.
+2. On a fresh Docker installation, we should have no images. Let's pull one from Dockerhub.
 
-    Zazwyczaj pobieramy obrazy z DockerHub według tagu. Mogą wyglądać następująco:
+    We usually pull images from DockerHub by tag. These look like:
 
     ```
     # Official Docker images
     <repo>:<tag>
     # ubuntu:22.04
-    # elasticsearch:5.2
+    # elasticsearch:8.15.1
     # nginx:latest
 
     # User or organization made images
@@ -30,7 +31,7 @@ Aby uruchomić kontenery, najpierw musimy pobrać kilka obrazów.
     # bitnami/rails:latest
     ```
 
-    Możemy wyszukiwać obrazy za pomocą `docker search <keyword>`
+    We can search for images using `docker search <keyword>`
 
     ```
     $ docker search ubuntu
@@ -43,9 +44,9 @@ Aby uruchomić kontenery, najpierw musimy pobrać kilka obrazów.
     ubuntu/dotnet-aspnet             Chiselled Ubuntu runtime image for ASP.NET a…   22        
     ```
 
-    Można również znaleźć obrazy online na [DockerHub](https://hub.docker.com/).
+    You can also find images online at [DockerHub](https://hub.docker.com/).
 
-    Uruchom `docker pull ubuntu:22.04` żeby pobrać obraz Ubuntu 22.04 z DockerHub.
+    Run `docker pull ubuntu:22.04` to pull an image of Ubuntu 22.04 from DockerHub.
 
     ```
     $ docker pull ubuntu:22:04
@@ -55,7 +56,7 @@ Aby uruchomić kontenery, najpierw musimy pobrać kilka obrazów.
     Status: Downloaded newer image for ubuntu:22.04
     docker.io/library/ubuntu:22.04
     ```
-3. Możemy również pobrać różne wersje tego samego obrazu.
+3. We can also pull different versions on the same image.
 
     Run `docker pull ubuntu:22.10` to pull an image of Ubuntu 22.10.
 
