@@ -8,7 +8,7 @@
 #### II. Laboratoria online
   - Kurs [Docker for Beginners with Hands-on labs](https://www.coursera.org/learn/docker-for-the-absolute-beginner) na platformie Coursera,    
   - Play with Docker [labs](https://labs.play-with-docker.com/) (wymagane konto na `DockerHub`),    
-  - Play with Docker [trainings](https://https://training.play-with-docker.com/) (wymagane konto na `DockerHub`),    
+  - Play with Docker [trainings](https://training.play-with-docker.com/) (wymagane konto na `DockerHub`),    
 
 #### III. Pożyteczne linki
   - [Docker](https://github.com/delner/docker-training/blob/master/README.md) training,  
