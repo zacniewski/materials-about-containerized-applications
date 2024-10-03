@@ -1,14 +1,15 @@
 ### Materiały z przedmiotu "Aplikacje w środowisku kontenerowym"
 
 #### I. Wymagania
-  - zainstalowany [Docker](https://docs.docker.com/get-started/get-docker/),
-  - zainstalowany [Docker Compose](https://docs.docker.com/compose/),
-  - konto na [DockerHub](https://hub.docker.com/).  
+  - :zap: zainstalowany [Docker](https://docs.docker.com/get-started/get-docker/),
+  - :zap: zainstalowany [Docker Compose](https://docs.docker.com/compose/),
+  - :zap: konto na [DockerHub](https://hub.docker.com/),  
+  - :zap: konto na [Coursera](https://www.coursera.org/).  
 
 #### II. Laboratoria online
-  - Kurs [Docker for Beginners with Hands-on labs](https://www.coursera.org/learn/docker-for-the-absolute-beginner) na platformie Coursera,    
+  - :zap: Kurs [Docker for Beginners with Hands-on labs](https://www.coursera.org/learn/docker-for-the-absolute-beginner) na platformie Coursera (wymagane konto),    
   - Play with Docker [labs](https://labs.play-with-docker.com/) (wymagane konto na `DockerHub`),    
-  - Play with Docker [trainings](https://training.play-with-docker.com/) (wymagane konto na `DockerHub`),    
+  - :zap: Play with Docker [trainings](https://training.play-with-docker.com/) (wymagane konto na `DockerHub`),    
 
 #### III. Pożyteczne linki
   - [Docker](https://github.com/delner/docker-training/blob/master/README.md) training,  
@@ -17,8 +18,9 @@
 
 
 #### IV. Zawartość repozytorium
-  - folder [01-docker-training](01-basic-docker-training/README.md) zawiera uaktualnioną wersję podstawowych ćwiczeń z Dockera,  
-  - folder [02-devops-with-docker](02-devops-with-docker) zawiera uaktualnioną wersję kursu 'DevOps with Docker'.  
+  - :zap: folder [01-docker-training](01-basic-docker-training/README.md) zawiera uaktualnioną wersję podstawowych ćwiczeń z Dockera,  
+  - :zap: folder [02-devops-with-docker](02-devops-with-docker) zawiera uaktualnioną wersję kursu 'DevOps with Docker',  
+  - :zap: folder [final-repo-structure](final-repo-structure) zawiera sugerowaną strukturę repozytorium zaliczeniowego.  
 
 #### V. Podział na bloki laboratoryjne
 > Każdy blok składa się z trzech godzin zajęć,  
