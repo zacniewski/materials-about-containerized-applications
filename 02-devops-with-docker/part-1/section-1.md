@@ -24,7 +24,7 @@ So stripping the jargon we get two definitions:
   1. Docker is a set of tools to deliver software in containers.
   2. Containers are packages of software.
 
-![Illustration of a container](/img/1/container.png)
+![Illustration of a container](../img/1/container.png)
 
 The above image illustrates how containers include the application and its dependencies. These containers are isolated so that they don't interfere with each other or the software running outside of the containers. In case you need to interact with them or enable interactions between them, Docker offers tools to do so.
 
@@ -72,7 +72,7 @@ Container orchestration will be discussed in parts 2 and 3. But the simplest exa
 
 Isn't there already a solution for this? Virtual Machines are not the same as Containers - they solve different problems. We will not be looking into Virtual Machines in this course. However, here's a diagram to give you a rough idea of the difference.
 
-![Containers vs virtual machines](/img/1/docker-explained-3.png)
+![Containers vs virtual machines](../img/1/docker-explained-3.png)
 
 The difference between a virtual machine and Docker solutions arises after moving Application A to an incompatible system "Operating System B". Running software on top of containers is almost as efficient as running it "natively" outside containers, at least when compared to virtual machines.
 

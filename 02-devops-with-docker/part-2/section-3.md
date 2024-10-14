@@ -8,7 +8,7 @@ All of the above have official Docker images available as we can see from [Redmi
 
 In <https://hub.docker.com/_/redmine> there is a list of different tagged versions:
 
-![Redmine](/img/2/redmine2024.png)
+![Redmine](../img/2/redmine2024.png)
 
 We can most likely use any of the available images.
 
@@ -217,7 +217,7 @@ adminer:
 
 Now when we run the application we can access the adminer from <http://localhost:8083>:
 
-![Adminer view](/img/2/adminer.png)
+![Adminer view](../img/2/adminer.png)
 
 Setting up the adminer is straightforward since it will be able to access the database through the Docker network. You may wonder how the adminer finds the Postgres database container. We provide this information to Redmine using an environment variable:
 
@@ -256,7 +256,7 @@ TIPS:
 * When configuring the database, you might need to destroy the automatically created volumes. Use commands `docker volume prune`, `docker volume ls` and `docker volume rm` to remove unused volumes when testing. Make sure to remove containers that depend on them beforehand.
 * `restart: unless-stopped` can help if the Postgres takes a while to get ready
 
-![Backend, frontend, redis and a database](/img/exercises/back-front-redis-and-database.png)
+![Backend, frontend, redis and a database](../img/exercises/back-front-redis-and-database.png)
 
 :::
 
@@ -295,7 +295,7 @@ In this exercise, you shall add [Nginx](https://hub.docker.com/_/nginx) to work 
 
 According to Wikipedia _a reverse proxy is a type of proxy server that retrieves resources on behalf of a client from one or more servers. These resources are then returned to the client, appearing as if they originated from the reverse proxy server itself._
 
-![Backend, frontend, redis, a database and nginx](/img/exercises/back-front-redis-database-and-nginx.png)
+![Backend, frontend, redis, a database and nginx](../img/exercises/back-front-redis-database-and-nginx.png)
 
 So in our case, the reverse proxy will be the single point of entry to our application, and the final goal will be to set both the React frontend and the Express backend behind the reverse proxy.
 

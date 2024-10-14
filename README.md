@@ -13,12 +13,12 @@
 
 #### III. Pożyteczne linki
   - [Docker](https://github.com/delner/docker-training/blob/master/README.md) training,  
-  - [DevOps with Docker](https://devopswithdocker.com/) course (and also on [GitHub](https://github.com/docker-hy/docker-hy.github.io)),  
+  - [DevOps with Docker](https://devopswithdocker.com/) course (i także na [GitHub'ie](https://github.com/docker-hy/docker-hy.github.io)),  
   - [DevOps with Kubernetes](https://devopswithkubernetes.com/) training,  
 
 
 #### IV. Zawartość repozytorium
-  - :zap: folder [01-docker-training](01-basic-docker-training/README.md) zawiera uaktualnioną wersję podstawowych ćwiczeń z Dockera,  
+  - :zap: folder [01-docker-training](01-basic-docker-training/README.md) zawiera standardowe ćwiczenia z Dockera,  
   - :zap: folder [02-devops-with-docker](02-devops-with-docker) zawiera uaktualnioną wersję kursu 'DevOps with Docker',  
   - :zap: folder [final-repo-structure](final-repo-structure) zawiera sugerowaną strukturę repozytorium zaliczeniowego.  
 

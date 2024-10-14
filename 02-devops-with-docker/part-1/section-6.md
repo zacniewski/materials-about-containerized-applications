@@ -169,11 +169,11 @@ _Do not alter the code of either project_
 
 Submit the edited Dockerfiles and commands used to run.
 
-![Backend and Frontend](/img/exercises/back-and-front.png)
+![Backend and Frontend](../img/exercises/back-and-front.png)
 
 The frontend will first talk to your browser. Then the code will be executed from your browser and that will send a message to the backend.
 
-![More information about connection between frontend and backend](/img/exercises/about-connection-front-back.png)
+![More information about connection between frontend and backend](../img/exercises/about-connection-front-back.png)
 
 TIPS:
 * When configuring web applications keep the browser developer console ALWAYS open, F12 or cmd+shift+I when the browser window is open. Information about configuring cross-origin requests is in the README of the backend project.

@@ -4,7 +4,7 @@ title: "Docker networking"
 
 Connecting two services such as a server and its database in docker can be achieved with a [Docker network](https://docs.docker.com/network/). In addition to starting services listed in docker-compose.yml Docker Compose automatically creates and joins both containers into a network with a [DNS](https://docs.docker.com/network/#dns-services). Each service is named after the name given in the docker-compose.yml file. As such, containers can reference each other simply with their service names, which is different from the container name.
 
-![Docker networks](/img/2/docker-networks.png)
+![Docker networks](../img/2/docker-networks.png)
 
 Here are two services in a single network: webapp and webapp-helper. The webapp-helper has a server, listening for requests in port 3000, that webapp wants to access. Because they were defined in the same docker-compose.yml file the access is trivial. Docker Compose has already taken care of creating a network and webapp can simply send a request to webapp-helper:3000, the internal DNS will translate that to the correct access and ports do not have to be published outside of the network.
 
@@ -35,7 +35,7 @@ When you've correctly configured the button will turn green.
 
 Submit the docker-compose.yml
 
-  ![Backend, frontend and redis](/img/exercises/back-front-and-redis.png)
+  ![Backend, frontend and redis](../img/exercises/back-front-and-redis.png)
 
 The [restart: unless-stopped](https://docs.docker.com/compose/compose-file/compose-file-v3/#restart) configuration can help if the Redis takes a while to get ready.
 

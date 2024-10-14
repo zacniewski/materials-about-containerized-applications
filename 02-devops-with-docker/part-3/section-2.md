@@ -136,7 +136,7 @@ and use the most recent versions in your workflow.
 
 Keep an eye on the GitHub Actions page to see that your workflow is working:
 
-![Github Actions page](/img/3/gha.png)
+![Github Actions page](../img/3/gha.png)
 
 Ensure also from Docker Hub that your image gets pushed there.
 
