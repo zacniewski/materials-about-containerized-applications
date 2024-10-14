@@ -9,16 +9,17 @@
 ### Podstawowe ćwiczenia
 
 1. [Zarządzanie obrazami i kontenerami w Dockerze](1-running-containers.md)
-2. [Changing images](https://github.com/delner/docker-training/blob/master/exercises/basic/2-changing_images/README.md)
-3. [Building your own images](https://github.com/delner/docker-training/blob/master/exercises/basic/3-building_images/README.md)
-4. [Sharing images](https://github.com/delner/docker-training/blob/master/exercises/basic/4-sharing_images/README.md)
-5. [Volumes](https://github.com/delner/docker-training/blob/master/exercises/basic/5-volumes/README.md)
-6. [Networking](https://github.com/delner/docker-training/blob/master/exercises/basic/6-networking/README.md)
+2. [Changing images](2-changing_images.md)
+3. [Building your own images](3-building_images.md)
+4. [Sharing images](4-sharing_images.md)
+5. [Volumes](5-volumes.md)
+6. [Networking](6-networking.md)
 
 
-### Zadania do realizacji
+### Zadania do realizacji (we wszystkich blokach)
   - należy przeanalizować wszystkie ćwiczenia, wykonując na swoim komputerze wszystkie wyszczególnione komendy,
-  - wszędzie tam, gdzie napisane jest 'wymagany screenshot XY', należy dokonać zapisu bieżącego stanu terminala poprzez tzw. screenshot, a plik ze zrzutem ekranu nazwać `XY.png`, gdzie XY to wyszczególniony numer,  
+  - w ćwiczeniu `1-running-containers` tam, gdzie napisane jest 'wymagany screenshot XY', należy dokonać zapisu bieżącego stanu terminala poprzez tzw. screenshot, a plik ze zrzutem ekranu nazwać `XY.png`, gdzie XY to wyszczególniony numer,  
+  > Podobnie należy postąpić we **wszystkich** pozostałych ćwiczeniach (również tym z Coursery)!
   - na zrzucie ekranu powinien znajdować się informacja o danym użytkowniku, idealnie gdyby był to numer indeksu,  
   - można np. nazwać folder roboczy `kontenery-123456`, gdzie `123456` to numer indeksu :smiley:,  
   - ww. plik umieszczamy w pliku `README.md`, dotyczącym danego ćwiczenia, wraz z krótkim poprzedzającym go opisem, np. 'Lista wszystkich kontenerów', itp.  
