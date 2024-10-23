@@ -19,8 +19,8 @@
 
 
 #### IV. Zawartość repozytorium
-  - :zap: folder [01-docker-training](01-basic-docker-training/README.md) zawiera standardowe ćwiczenia z Dockera,  
-  - :zap: folder [02-devops-with-docker](02-devops-with-docker) zawiera uaktualnioną wersję kursu 'DevOps with Docker',  
+  - :zap: folder [basic-docker-training](basic-docker-training/README.md) zawiera standardowe ćwiczenia z Dockera,  
+  - :zap: folder [devops-with-docker](devops-with-docker) zawiera uaktualnioną wersję kursu 'DevOps with Docker',  
   - :zap: folder [final-repo-structure](final-repo-structure) zawiera sugerowaną strukturę repozytorium zaliczeniowego.  
 
 #### V. Podział na bloki laboratoryjne
@@ -28,15 +28,15 @@
 > planowanych jest 20 bloków (3 godz. x 20 = 60 godz.), w tym 1 blok "rezerwowy" (w razie potrzeby ukończenia pozostałych bloków).    
 
 
-| Zagadnienie                                       | Liczba bloków (godzin) |
-|---------------------------------------------------|------------------------|
-| 1. Kurs "Docker for Beginners with Hands-on labs" | Bloki 1-3 (9 godzin)   |
-| 2. Basic Docker training                          | Bloki 4-6 (9 godzin)   |
-| 3. Play with Docker trainings                     | Bloki 7-8 (6 godzin)   |
-| 4. DevOps with Docker (part 1)                    | Bloki 9-11 (9 godzin)  |
-| 5. DevOps with Docker (part 2)                    | Bloki 12-14 (9 godzin) |
-| 6. DevOps with Docker (part 3)                    | Bloki 15-17 (9 godzin) |
-| 7. Analiza projektu Docker'owego (np. własnego)   | Bloki 18-19 (6 godzin) |
-| 8. Blok rezerwowy                                 | Blok 20 (3 godziny)    |
-|                                                   |                        |
-| RAZEM:                                            | Bloków: 20 (60 godzin) |
+| Zagadnienie                                                         | Liczba bloków (godzin) |
+|---------------------------------------------------------------------|------------------------|
+| 1. Kurs "Docker for Beginners with Hands-on labs" (z Coursery)      | Bloki 1-3 (9 godzin)   |
+| 2. Basic Docker training  (folder 'basic-docker-training' w repo)   | Bloki 4-6 (9 godzin)   |
+| 3. Play with Docker trainings                                       | Bloki 7-8 (6 godzin)   |
+| 4. DevOps with Docker (part 1) (folder 'devops-with-docker' w repo) | Bloki 9-11 (9 godzin)  |
+| 5. DevOps with Docker (part 2)     (jak wyżej)                      | Bloki 12-14 (9 godzin) |
+| 6. DevOps with Docker (part 3)     (jak wyżej)                      | Bloki 15-17 (9 godzin) |
+| 7. Analiza projektu Docker'owego (np. własnego)                     | Bloki 18-19 (6 godzin) |
+| 8. Blok rezerwowy                                                   | Blok 20 (3 godziny)    |
+|                                                                     |                        |
+| RAZEM:                                                              | Bloków: 20 (60 godzin) |
