@@ -9,9 +9,9 @@
 ### Podstawowe ćwiczenia
 
 1. [Zarządzanie obrazami i kontenerami w Dockerze](1-running-containers.md)
-2. [Changing images](2-changing_images.md)
-3. [Building your own images](3-building_images.md)
-4. [Sharing images](4-sharing_images.md)
+2. [Changing images](2-changingimages.md)
+3. [Building your own images](3-building-images.md)
+4. [Sharing images](4-sharing-images.md)
 5. [Volumes](5-volumes.md)
 6. [Networking](6-networking.md)
 
