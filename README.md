@@ -53,5 +53,11 @@
 7. Pokaż działanie `docker compose` w swoim projekcie.
 8. Omów na podstawie swojej aplikacji komendy `docker inspect` i `docker logs`.
 9. Czym są sieci w Dockerze? Zaprezentuj przykład na bazie swojego projektu.
-10. Jaka jest różnica między obrazem i kontenerem? Pokaż przykład budowania obrazu (`Dockerfile`) i uruchamiania na jego podstawie kontenera.
-11. Pokaż jak "wejść" do wybranego kontenera. Utwórz w nim plik tekstowy z dowolnymi danymi. Co zrobić, żeby po zamknięciu kontenera dane z pliku były dostępne po ponownym uruchomieniu kontenera? Zademonstruj dowolny sposób.
+10. Jaka jest różnica między obrazem i kontenerem? 
+    Pokaż przykład budowania obrazu (`Dockerfile`) i uruchamiania na jego podstawie kontenera.
+11. Pokaż jak "wejść" do wybranego kontenera.  
+    Utwórz w nim plik tekstowy z dowolnymi danymi. 
+    Co zrobić, żeby po zamknięciu kontenera dane z pliku były dostępne po ponownym uruchomieniu kontenera?  
+    Zademonstruj dowolny sposób.
+12. Zbuduj wybrany przez siebie obraz, nadaj mu 'tag' i opublikuj na DockerHubie. 
+    Następnie usuń lokalnie ww. obraz i pobierz go z DockerHuba.  
