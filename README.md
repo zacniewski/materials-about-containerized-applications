@@ -41,7 +41,10 @@
 |                                                                     |                        |
 | RAZEM:                                                              | Bloków: 20 (60 godzin) |
 
-
+> W zagadnieniu nr 7 chodzi o to, żeby pokazać wybrany projekt w naciskiem na elementy związane z Dockerem.
+Czyli Dockerfile, docker-compose, usługi, uruchamianie skryptów typu `wait-for`, wolumeny z danymi/bazami danych, logi, inspekcja, itd.
+Może to być np. aplikacja webowa lub inny projekt, gdzie korzysta się z możliwości Dockera.  
+> 
 #### VI. Pytania, które mogą się pojawić na zaliczeniu (egzaminie)
 1. Utwórz plik z obrazem `Dockerfile`, w którym z hosta do kontenera kopiowany będzie folder `code` (zawiera np. jeden skrypt w języku Python :snake:) i zbuduj go:  
     - uruchom ww. skrypt wewnątrz kontenera.
