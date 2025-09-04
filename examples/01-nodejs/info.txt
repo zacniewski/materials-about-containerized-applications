@@ -1,0 +1,14 @@
+# budowanie obrazu
+sudo docker build -t nodejs-image .
+
+# sprawdzanie obrazów
+sudo docker image list
+
+# tworzenie kontenera nodejs-container na bazie obrazu nodejs-image
+sudo docker run -d --name nodejs-container nodejs-image
+
+# sprawdzanie kontenerów
+sudo docker ps
+
+# uruchamianie aplikacji (powinna działać pod adresem http://localhost:3000)
+sudo docker run -it -p 3000:3000 nodejs-image
