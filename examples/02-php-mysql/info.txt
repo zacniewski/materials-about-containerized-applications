@@ -1,0 +1,36 @@
+# Projekt: PHP + MySQL (docker-compose)
+
+## Wymagania
+- Docker oraz Docker Compose (polecenie `docker compose`)
+
+## Uruchomienie
+1. Przejdź do katalogu projektu:
+   cd examples/02-php-mysql
+2. Uruchom usługi w tle:
+   docker compose up -d
+3. Otwórz aplikację w przeglądarce:
+   http://localhost:8080
+
+Pierwsze uruchomienie może potrwać chwilę (inicjalizacja bazy danych).
+
+## Zatrzymywanie i sprzątanie
+- Podejrzyj działające kontenery:
+  docker ps
+- Zatrzymaj stos:
+  docker compose down
+- Zatrzymaj i usuń z danymi (wolumen bazy):
+  docker compose down -v
+
+## Dane dostępowe do bazy
+- Host: db
+- Baza: appdb
+- Użytkownik: appuser
+- Hasło: apppass
+
+## Struktura
+- docker-compose.yaml — definicja usług PHP (Apache) i MySQL
+- src/index.php — prosta aplikacja PHP łącząca się z bazą i zapisująca/wyświetlająca notatki
+
+## Uwaga
+- Obraz PHP instaluje rozszerzenie mysqli przy starcie kontenera.
+- Jeśli port 8080 jest zajęty, zmień mapowanie portu w pliku docker-compose.yaml (sekcja services.app.ports).
