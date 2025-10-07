@@ -16,6 +16,7 @@
   - [Docker](https://github.com/delner/docker-training/blob/master/README.md) training,  
   - [DevOps with Docker](https://devopswithdocker.com/) course (i także na [GitHub'ie](https://github.com/docker-hy/docker-hy.github.io)),  
   - [DevOps with Kubernetes](https://devopswithkubernetes.com/) training,  
+  - [Docker](https://zacniewski.github.io/programming-resources/) resources (dział 'Docker').  
 
 
 #### IV. Zawartość repozytorium
