@@ -42,11 +42,19 @@
 |                                                                     |                        |
 | RAZEM:                                                              | Bloków: 20 (60 godzin) |
 
-> W zagadnieniu nr 7 chodzi o to, żeby pokazać wybrany projekt w naciskiem na elementy związane z Dockerem.
+> W zagadnieniu nr 7 chodzi o to, żeby pokazać wybrany projekt z naciskiem na elementy związane z Dockerem.
 Czyli Dockerfile, docker-compose, usługi, uruchamianie skryptów typu `wait-for`, wolumeny z danymi/bazami danych, logi, inspekcja, itd.
 Może to być np. aplikacja webowa lub inny projekt, gdzie korzysta się z możliwości Dockera.  
-> 
-#### VI. Pytania, które mogą się pojawić na zaliczeniu (egzaminie)
+
+#### VI. Zadania do realizacji (we wszystkich blokach)
+  - należy przeanalizować wszystkie ćwiczenia, wykonując na swoim komputerze wszystkie wyszczególnione komendy,
+  - dla przykładu w ćwiczeniu `1-running-containers` tam, gdzie napisane jest 'wymagany screenshot XY', należy dokonać zapisu bieżącego stanu terminala poprzez tzw. screenshot, a plik ze zrzutem ekranu nazwać `XY.png`, gdzie XY to wyszczególniony numer,  
+  > Podobnie należy postąpić we **wszystkich** pozostałych ćwiczeniach (również tym z Coursery)!
+  - na zrzucie ekranu powinien znajdować się informacja o danym użytkowniku; idealnie, gdyby był to numer indeksu,  
+  - można np. nazwać folder roboczy `kontenery-123456`, gdzie `123456` to numer indeksu :smiley:,  
+  - ww. plik umieszczamy w pliku `README.md`, dotyczącym danego ćwiczenia, wraz z krótkim poprzedzającym go opisem, np. 'Lista wszystkich kontenerów' itp.   
+
+#### VII. Pytania, które mogą się pojawić na zaliczeniu (egzaminie)
 1. Utwórz plik z obrazem `Dockerfile`, w którym z hosta do kontenera kopiowany będzie folder `code` (zawiera np. jeden skrypt w języku Python :snake:) i zbuduj go:  
     - uruchom ww. skrypt wewnątrz kontenera.
 2. Skopiuj wybrany plik tekstowy z hosta (swojego komputera) do kontenera Dockerowego.
@@ -65,3 +73,5 @@ Może to być np. aplikacja webowa lub inny projekt, gdzie korzysta się z możl
     Zademonstruj dowolny sposób.
 12. Zbuduj wybrany przez siebie obraz, nadaj mu 'tag' i opublikuj na DockerHubie. 
     Następnie usuń lokalnie ww. obraz i pobierz go z DockerHuba.  
+13. Pokaż na konkretnym przykładzie co najmniej dwie tzw. 'dobre praktyki' związane z tworzeniem i wykorzystaniem pliku `Dockerfile`.  
+14. Pokaż na konkretnym przykładzie co najmniej dwie tzw. 'dobre praktyki' związane z tworzeniem i wykorzystaniem pliku `docker-compose.yaml`.  
