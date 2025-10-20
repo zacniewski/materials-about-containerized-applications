@@ -7,7 +7,6 @@
   - :zap: konto na [Coursera](https://www.coursera.org/).  
 
 #### II. Laboratoria online
-  - :zap: Kurs [Docker for Beginners with Hands-on labs](https://www.coursera.org/learn/docker-for-the-absolute-beginner) na platformie Coursera (wymagane konto),    
   - Play with Docker [labs](https://labs.play-with-docker.com/) (wymagane konto na `DockerHub`),    
   - :zap: Play with Docker [trainings](https://training.play-with-docker.com/) (wymagane konto na `DockerHub`),    
   > dla powyższego laboratorium (trainings) można wybrać między 'IT Pros and System Administrators' a 'Developers'.
@@ -32,16 +31,15 @@
 
 
 | Zagadnienie                                                         | Liczba bloków (godzin) |
-|---------------------------------------------------------------------|------------------------|
-| 1. Kurs "Docker for Beginners with Hands-on labs" (z Coursery)      | Bloki 1-3 (9 godzin)   |
-| 2. Basic Docker training  (folder 'basic-docker-training' w repo)   | Bloki 4-6 (9 godzin)   |
-| 3. Play with Docker trainings                                       | Bloki 7-8 (6 godzin)   |
-| 4. DevOps with Docker (part 1) (folder 'devops-with-docker' w repo) | Bloki 9-11 (9 godzin)  |
-| 5. DevOps with Docker (part 2)     (jak wyżej)                      | Bloki 12-14 (9 godzin) |
-| 6. DevOps with Docker (part 3)     (jak wyżej)                      | Bloki 15-17 (9 godzin) |
-| 7. Analiza projektu Docker'owego (np. własnego)                     | Bloki 18-19 (6 godzin) |
-| 8. Blok rezerwowy                                                   | Blok 20 (3 godziny)    |
-|                                                                     |                        |
+|---------------------------------------------------------------------|-----------------------|
+| 1. Basic Docker training  (folder 'basic-docker-training' w repo)   | Bloki 1-3 (9 godzin)  |
+| 2. Play with Docker trainings                                       | Bloki 4-5 (6 godzin)  |
+| 3. DevOps with Docker (part 1) (folder 'devops-with-docker' w repo) | Bloki 6-8 (9 godzin)  |
+| 4. DevOps with Docker (part 2)     (jak wyżej)                      | Bloki 9-11 (9 godzin) |
+| 5. DevOps with Docker (part 3)     (jak wyżej)                      | Bloki 12-14 (9 godzin) |
+| 6. Własny projektu Docker'owy z wykorzystaniem Dockerfile           | Bloki 15-17 (9 godzin) |
+| 7. Własny projektu Docker'owy z wykorzystaniem docker-compose       | Blok 17-20 (9 godzin) |
+|                                                                     |                       |
 | RAZEM:                                                              | Bloków: 20 (60 godzin) |
 
 > W zagadnieniu nr 7 chodzi o to, żeby pokazać wybrany projekt z naciskiem na elementy związane z Dockerem.
