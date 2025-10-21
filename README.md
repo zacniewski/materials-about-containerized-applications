@@ -42,7 +42,7 @@
 |                                                                     |                       |
 | RAZEM:                                                              | Bloków: 20 (60 godzin) |
 
-> W zagadnieniu nr 7 chodzi o to, żeby pokazać wybrany projekt z naciskiem na elementy związane z Dockerem.
+> W zagadnieniach nr 7 i 8 chodzi o to, żeby pokazać wybrany projekt z naciskiem na elementy związane z Dockerem.
 Czyli Dockerfile, docker-compose, usługi, uruchamianie skryptów typu `wait-for`, wolumeny z danymi/bazami danych, logi, inspekcja, itd.
 Może to być np. aplikacja webowa lub inny projekt, gdzie korzysta się z możliwości Dockera.  
 
