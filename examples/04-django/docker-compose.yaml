@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+  web:
+    build:
+      context: .
+    container_name: django-open-meteo
+    command: bash -lc "python manage.py migrate --noinput && python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - "8000:8000"
+    environment:
+      - DJANGO_DEBUG=1
+      - DJANGO_SECRET_KEY=change-me-in-prod
+      - DJANGO_ALLOWED_HOSTS=*
+      - TZ=Europe/Warsaw
+    volumes:
+      - ./:/app
+    working_dir: /app
+
+# Usage:
+#   docker compose up --build
+#   Open http://localhost:8000

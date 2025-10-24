@@ -1,0 +1,23 @@
+Przykład 03 - Python + Dockerfile + Open-Meteo (Gdynia)
+
+Opis:
+  Prosty klient Pythona wykorzystujący pakiet 'requests' do pobrania
+  bieżącej pogody oraz prognozy godzinowej dla Gdyni z API Open‑Meteo.
+
+Wymagania:
+  - Docker
+
+Budowanie obrazu:
+  docker build -t meteo-gdynia:latest .
+
+Uruchomienie kontenera:
+  docker run --rm meteo-gdynia:latest
+
+Zmiana parametrów (opcjonalnie):
+  - Zmiana liczby godzin prognozy:  docker run --rm -e HOURS_AHEAD=12 meteo-gdynia:latest
+  - Zmiana strefy czasowej:        docker run --rm -e TIMEZONE=Europe/Warsaw meteo-gdynia:latest
+  - Inne współrzędne:              docker run --rm -e LAT=54.52 -e LON=18.53 meteo-gdynia:latest
+
+Uwagi:
+  - API: https://open-meteo.com/
+  - Domyślne współrzędne wskazują Gdynię (Polska).

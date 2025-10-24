@@ -1,0 +1,28 @@
+Przykład 04 - Django + docker-compose + Open‑Meteo (formularz)
+
+Opis:
+  Prosta aplikacja webowa w Django (Python), która umożliwia wykonanie
+  zapytań do API https://open-meteo.com/ dla podanych miejscowości.
+  Aplikacja wykorzystuje pakiet 'httpx' do wykonywania zapytań HTTP.
+  Pokazywana jest bieżąca pogoda oraz (opcjonalnie) prognoza godzinowa.
+
+Wymagania:
+  - Docker i Docker Compose
+
+Uruchomienie:
+  1) Przejdź do folderu przykładu:
+       cd examples/04-django
+  2) Uruchom kompozycję:
+       docker compose up --build
+  3) Otwórz w przeglądarce:
+       http://localhost:8000
+
+Użycie:
+  - Wpisz jedną lub kilka miejscowości (oddzielonych przecinkami), np.:
+      Gdynia, Warszawa
+  - Ustal liczbę godzin prognozy (0 aby pominąć prognozę) i zatwierdź.
+
+Uwagi:
+  - Do geokodowania używane jest API Geocoding Open‑Meteo.
+  - Parametr strefy czasowej ustawiany jest automatycznie (timezone=auto).
+  - Ten przykład jest edukacyjny i nie jest zoptymalizowany produkcyjnie.

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Open‑Meteo – Zapytania</title>
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 2rem; }
+    .container { max-width: 960px; margin: 0 auto; }
+    .card { border: 1px solid #ddd; padding: 1rem; margin: 1rem 0; border-radius: 8px; }
+    .error { color: #a00; }
+    label { display:block; margin-top: .5rem; font-weight: 600; }
+    input[type="text"], input[type="number"] { width: 100%; padding: .5rem; margin-top: .25rem; }
+    button { margin-top: .75rem; padding: .5rem 1rem; }
+    small { color: #555; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid #eee; padding: .5rem; text-align: left; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Open‑Meteo – zapytania przez formularz</h1>
+    <p>Wpisz miejscowości i pobierz bieżącą pogodę oraz prognozę z <a href="https://open-meteo.com/" target="_blank" rel="noopener">open‑meteo.com</a>.</p>
+
+    <form method="get">
+      {% csrf_token %}
+      <label for="id_cities">{{ form.cities.label }}</label>
+      {{ form.cities }}
+      <small>{{ form.cities.help_text }}</small>
+
+      <label for="id_include_forecast_hours">{{ form.include_forecast_hours.label }}</label>
+      {{ form.include_forecast_hours }}
+      <small>{{ form.include_forecast_hours.help_text }}</small>
+
+      <div>
+        <button type="submit">Pobierz</button>
+      </div>
+    </form>
+
+    {% if form.errors %}
+      <div class="error">
+        <p>Sprawdź poprawność formularza.</p>
+        {{ form.errors }}
+      </div>
+    {% endif %}
+
+    {% if results %}
+      <h2>Wyniki</h2>
+      {% for item in results %}
+        <div class="card">
+          {% if item.error %}
+            <strong class="error">{{ item.query|default:"(brak)" }}: {{ item.error }}</strong>
+          {% else %}
+            <h3>{{ item.geo.name }}{% if item.geo.admin1 %}, {{ item.geo.admin1 }}{% endif %} ({{ item.geo.country }})</h3>
+            {% if item.weather.current %}
+              <p><strong>Teraz:</strong>
+                Temp: {{ item.weather.current.temperature_2m }}°C,
+                Wilgotność: {{ item.weather.current.relative_humidity_2m }}%,
+                Wiatr: {{ item.weather.current.wind_speed_10m }} km/h
+              </p>
+            {% endif %}
+
+            {% if item.hourly_rows %}
+              <details>
+                <summary>Prognoza godzinowa</summary>
+                <table>
+                  <thead>
+                    <tr><th>Czas</th><th>Temp (°C)</th><th>Wilg. (%)</th><th>Opad (mm)</th><th>Wiatr (km/h)</th></tr>
+                  </thead>
+                  <tbody>
+                    {% for row in item.hourly_rows %}
+                      <tr>
+                        <td>{{ row.time }}</td>
+                        <td>{{ row.temperature_2m }}</td>
+                        <td>{{ row.relative_humidity_2m }}</td>
+                        <td>{{ row.precipitation }}</td>
+                        <td>{{ row.wind_speed_10m }}</td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </details>
+            {% endif %}
+          {% endif %}
+        </div>
+      {% endfor %}
+    {% endif %}
+
+    <p><small>Użyto httpx do zapytań HTTP. Ten przykład jest tylko demonstracyjny.</small></p>
+  </div>
+</body>
+</html>
