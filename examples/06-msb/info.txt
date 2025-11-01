@@ -1,0 +1,62 @@
+Przykład: budowanie obrazów z i bez multi-stage (Go HTTP server)
+================================================================
+
+Struktura:
+- main.go — prosta aplikacja HTTP, domyślnie nasłuchuje na porcie 8080 (zmienna PORT)
+- go.mod — moduł Go
+- Dockerfile.single — przykład bez multi-stage (jednostopniowy build)
+- Dockerfile.multi  — przykład z multi-stage (builder + ultra-lekki runtime)
+
+Wymagania:
+- Zainstalowany Docker (wersja wspierająca multi-stage — w praktyce dowolna współczesna)
+
+Budowanie obrazów:
+1) Bez multi-stage (jednostopniowy):
+   docker build -f Dockerfile.single -t msb-single:latest .
+
+2) Z multi-stage (zalecane do prod):
+   docker build -f Dockerfile.multi -t msb-multi:latest .
+
+Uruchamianie kontenera:
+- Single-stage:
+  docker run --rm -p 8080:8080 --name msb-single msb-single:latest
+
+- Multi-stage:
+  docker run --rm -p 8080:8080 --name msb-multi msb-multi:latest
+
+Test:
+- W przeglądarce:  http://localhost:8080/
+- Lub curl:        curl -i http://localhost:8080/
+
+Porównanie (przykładowe polecenia):
+- Rozmiar obrazów:      docker images | grep msb-
+- Zawartość warstw:     docker history msb-single:latest
+                        docker history msb-multi:latest
+
+Opis i korzyści multi-stage:
+- Mniejszy rozmiar obrazu końcowego
+  • W podejściu single-stage finalny obraz zawiera pełny toolchain (kompilator, narzędzia), które nie są potrzebne w runtime.
+  • W multi-stage finalny obraz zawiera tylko skompilowaną binarkę + minimalny runtime (tu: scratch), co znacząco zmniejsza rozmiar.
+
+- Szybsze pobieranie i wdrożenia
+  • Mniejsze obrazy = szybsze pull/push, krótszy czas wdrożeń, niższe koszty transferu.
+
+- Wyższe bezpieczeństwo
+  • Mniej pakietów i narzędzi w finalnym obrazie = mniejsza powierzchnia ataku.
+  • Brak shella i menedżerów pakietów utrudnia eskalację ataków wewnątrz kontenera.
+
+- Lepsze cache’owanie buildów
+  • Możemy oddzielić etapy (pobieranie zależności vs. kompilacja vs. runtime) i skuteczniej wykorzystywać cache warstw.
+
+- Przenośny i deterministyczny runtime
+  • Finalny obraz oparty o scratch lub distroless jest prosty i przewidywalny. Mniej „ukrytych” zależności środowiska.
+
+Uwagi i kompromisy:
+- Single-stage bywa prostszy do debugowania (masz dostęp do narzędzi w tym samym obrazie), ale jest cięższy i mniej bezpieczny.
+- Multi-stage wymaga odrobiny więcej konfiguracji (dwa etapy), ale przynosi realne korzyści w produkcji.
+
+Dodatkowe polecenia (przykład porównania uruchomionego kontenera):
+- Zobacz procesy i obraz:
+  docker ps --format 'table {{.Names}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}' | grep msb-
+
+Powodzenia!

@@ -1,0 +1,21 @@
+# Ogólne
+.git
+.gitignore
+Dockerfile*
+README*
+
+# Go build cache i moduły
+/bin/
+/build/
+/dist/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# IDE
+.vscode/
+.idea/

@@ -1,0 +1,20 @@
+# Jednostopniowy build: kompilacja i runtime w jednym obrazie
+FROM golang:1.22-alpine
+
+# Instalujemy narzędzia i budujemy aplikację wewnątrz finalnego obrazu
+WORKDIR /app
+
+# Najpierw zależności modułów (dla lepszego cache) – w tym przykładzie brak innych plików
+COPY go.mod ./
+RUN go mod download
+
+# Kopiujemy źródła i budujemy binarkę
+COPY main.go ./
+RUN go build -o server .
+
+# Konfiguracja uruchomieniowa
+ENV PORT=8080
+EXPOSE 8080
+
+# Uruchamiamy skompilowaną binarkę – ale w obrazie nadal zostaje pełny toolchain Go
+CMD ["./server"]
