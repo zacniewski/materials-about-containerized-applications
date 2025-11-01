@@ -1,0 +1,40 @@
+services:
+  web:
+    build: .
+    image: todo-mongodb-v1:latest
+    container_name: todo-web
+    environment:
+      - PORT=3000
+      - MONGODB_URI=mongodb://mongo:27017/todos
+    ports:
+      - "3000:3000"
+    depends_on:
+      mongo:
+        condition: service_healthy
+
+  mongo:
+    image: mongo:7
+    container_name: todo-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.runCommand({ ping: 1 })"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  mongo-express:
+    image: mongo-express:1.0.2-20
+    container_name: todo-mongo-express
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongo
+      - ME_CONFIG_BASICAUTH=false
+    ports:
+      - "8081:8081"
+    depends_on:
+      - mongo
+
+volumes:
+  mongo_data:

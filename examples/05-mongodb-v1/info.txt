@@ -1,0 +1,28 @@
+Projekt: Prosta aplikacja To-Do oparta o Node.js + Express + MongoDB. W zestawie Dockerfile i docker-compose z usługami: web, mongo i mongo-express.
+
+Szybki start
+1) Zbuduj i uruchom stack:
+   docker compose up --build
+
+2) Odwiedź aplikację:
+   - To-Do (web):           http://localhost:3000/
+   - mongo-express (GUI):   http://localhost:8081/
+
+3) Dane MongoDB są trwale przechowywane w wolumenie dockerowym "mongo_data".
+
+Zatrzymanie
+- Wciśnij Ctrl+C, a następnie usuń kontenery (bez danych):
+  docker compose down
+
+- Aby dodatkowo usunąć wolumeny (skasuje dane!):
+  docker compose down -v
+
+Struktura katalogu
+- Dockerfile              -> obraz dla aplikacji webowej
+- docker-compose.yaml     -> definicja usług: web, mongo, mongo-express
+- package.json            -> zależności Node.js
+- src/app.js              -> prosty serwer Express + Mongoose
+
+Uwagi
+- Aplikacja łączy się z bazą pod adresem mongodb://mongo:27017/todos (serwis "mongo" w compose).
+- mongo-express działa bez uwierzytelnienia (tylko do celów demo). Nie używaj w produkcji.

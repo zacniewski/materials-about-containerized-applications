@@ -1,0 +1,19 @@
+{
+  "name": "todo-mongodb-v1",
+  "version": "1.0.0",
+  "description": "Simple To-Do app using Node.js, Express, MongoDB, and mongo-express (Docker example)",
+  "main": "src/app.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "NODE_ENV=development nodemon src/app.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "mongoose": "^8.7.0",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  }
+}
