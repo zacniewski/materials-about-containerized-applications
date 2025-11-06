@@ -1,0 +1,56 @@
+# syntax=docker/dockerfile:1.7
+
+# Etap 1: builder – instalacja zależności i budowa artefaktów (np. bundling)
+FROM node:20.11-alpine AS builder
+
+# Precyzujemy wersję Node (brak :latest). Alpine dla mniejszej podstawy.
+
+ENV NODE_ENV=production
+WORKDIR /app
+
+# Kopiujemy pliki zależności najpierw, aby wykorzystać cache
+# Dostosuj do używanego menedżera pakietów
+COPY package.json package-lock.json* pnpm-lock.yaml* yarn.lock* ./
+
+# Wybierz jeden menedżer (npm/yarn/pnpm). Tu przykład z npm ci (deterministycznie)
+RUN if [ -f package-lock.json ]; then npm ci --omit=dev; \
+    elif [ -f pnpm-lock.yaml ]; then npm -g i pnpm && pnpm i --frozen-lockfile --prod; \
+    elif [ -f yarn.lock ]; then yarn install --frozen-lockfile --production; \
+    else npm install --omit=dev; fi
+
+# Po instalacji zależności kopiujemy resztę kodu (lepszy cache)
+COPY . .
+
+# Jeśli aplikacja wymaga buildu (front-end, TypeScript itp.), wykonaj go teraz
+# RUN npm run build
+
+# Etap 2: runtime – minimalny obraz, bez narzędzi developerskich
+FROM node:20.11-alpine AS runtime
+
+# Metadane obrazu
+LABEL org.opencontainers.image.title="Przykład dobrego Dockerfile dla Node.js" \
+      org.opencontainers.image.description="Multi-stage, cache-friendly, non-root" \
+      org.opencontainers.image.licenses="MIT"
+
+ENV NODE_ENV=production
+WORKDIR /app
+
+# Tworzymy użytkownika nie-root i katalog na logi/dane
+RUN addgroup -S app && adduser -S app -G app \
+ && mkdir -p /app && chown -R app:app /app
+
+# Kopiujemy tylko niezbędne pliki z etapu builder
+COPY --from=builder /app /app
+
+# Opcjonalnie: jeśli budujesz do ./dist, kopiuj tylko dist i package*.json
+# COPY --from=builder /app/dist /app/dist
+# COPY --from=builder /app/package*.json /app/
+
+# Ustawienia portu (jeśli serwer HTTP)
+EXPOSE 3000
+
+USER app
+
+# Domyślne polecenie – dopasuj do swojej aplikacji
+# Jeśli używasz bundla: ["node", "dist/index.js"]
+CMD ["node", "server.js"]

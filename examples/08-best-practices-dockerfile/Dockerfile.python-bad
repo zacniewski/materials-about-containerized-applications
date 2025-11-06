@@ -1,0 +1,24 @@
+# PRZYKŁAD ANTYWZORCA – tak NIE pisać Dockerfile
+# (Komentarze wyjaśniają problemy w każdej linii.)
+
+# 1) Użycie latest – nieprzewidywalność buildu
+FROM python:latest
+
+# 2) Brak .dockerignore i niepotrzebne kopiowanie wszystkiego
+WORKDIR /app
+COPY . .  # Kopiuje lokalne śmieci (node_modules, .git, .env, logi...) i psuje cache
+
+# 3) Instalacja pakietów OS w osobnych warstwach + bez czyszczenia cache
+RUN apt-get update
+RUN apt-get install -y build-essential curl  # brak --no-install-recommends, powiększa obraz
+
+# 4) Instalacja zależności Python po skopiowaniu całego kodu → słaby cache
+RUN pip install -r requirements.txt  # brak pinningu (konkretnej wartości) wersji, brak --no-cache-dir
+
+# 5) Uruchamianie jako root – niepotrzebne uprawnienia
+# (Brak USER)
+
+# 6) Brak metadanych i healthchecka
+
+# 7) ENTRYPOINT zamiast CMD bez potrzeby
+ENTRYPOINT ["python", "app.py"]

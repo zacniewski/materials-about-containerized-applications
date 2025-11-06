@@ -1,0 +1,51 @@
+# Ignoruj systemy kontroli wersji
+.git
+.hg
+.svn
+
+# Ignoruj konfiguracje IDE/edytorów
+.idea
+.vscode
+*.swp
+
+# Pliki i katalogi buildów
+node_modules
+bower_components
+dist
+build
+.tmp
+coverage
+
+# Python cache
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+
+# Logi i tymczasowe
+*.log
+logs
+.tmp
+.DS_Store
+Thumbs.db
+
+# Sekrety i pliki konfiguracyjne lokalne
+.env
+.env.*
+*.pem
+*.key
+*.crt
+*.p12
+
+# Artefakty zależne od OS
+*.tar
+*.zip
+*.gz
+
+# Nie kopiuj plików Dockerfile jeżeli nie są potrzebne do buildu
+Dockerfile*
+
+# Jeżeli budujesz front-end – ignoruj lokalne cache narzędzi
+.npm
+.pnpm-store
+.yarn

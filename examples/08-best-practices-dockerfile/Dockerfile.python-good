@@ -1,0 +1,78 @@
+# syntax=docker/dockerfile:1.7
+
+# Etap 1: builder – instalacja zależności i przygotowanie artefaktów
+FROM python:3.12-slim AS builder
+
+# Wersje bazowe są przypięte (brak :latest). Dodatkowo możesz użyć digestu.
+
+# Ustawienia środowiska dla powtarzalności
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1
+
+# Opcjonalne: narzędzia potrzebne do budowania zależności (kompilatory, nagłówki)
+# Instalujemy i czyścimy w jednej warstwie
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+# Najpierw kopiujemy lockfile/zależności, aby maksymalnie wykorzystać cache
+# Jeśli używasz poetry/pip-tools – skopiuj odpowiednie pliki (poetry.lock, requirements.txt itp.)
+COPY requirements.txt ./
+
+# Tworzymy wirtualne środowisko i instalujemy zależności
+# (venv w oddzielnym katalogu ułatwia kopiowanie do finalnego obrazu)
+RUN python -m venv /opt/venv \
+ && . /opt/venv/bin/activate \
+ && pip install --upgrade pip \
+ && pip install -r requirements.txt
+
+# Skopiuj resztę kodu (po zainstalowaniu deps – lepszy cache)
+COPY . .
+
+# Tu ewentualnie: budowanie assetów statycznych, kompilacja, testy itd.
+# RUN python -m compileall -q .
+
+# Etap 2: finalny obraz runtime – minimalny i bez narzędzi buildowych
+FROM python:3.12-slim AS runtime
+
+# Metadane obrazu
+LABEL org.opencontainers.image.title="Przykład dobrego Dockerfile dla Pythona" \
+      org.opencontainers.image.description="Multi-stage build, non-root, cache-friendly" \
+      org.opencontainers.image.licenses="MIT" \
+      org.opencontainers.image.source="https://example.local/repo"
+
+# Dla niektórych aplikacji sensowne jest ustawienie locale
+ENV LC_ALL=C.UTF-8 LANG=C.UTF-8
+
+# Użytkownik nie-root
+RUN useradd -u 10001 -m -d /home/app -s /sbin/nologin app
+
+# Ustalamy katalog roboczy i uprawnienia
+WORKDIR /app
+
+# Kopiujemy gotowe venv z etapu builder
+COPY --from=builder /opt/venv /opt/venv
+# Kopiujemy tylko to, co potrzebne do uruchomienia (kod, pliki runtime)
+COPY --from=builder /app /app
+
+# Ustawiamy PATH tak, aby używać pakietów z venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+# Opcjonalnie: HEALTHCHECK (jeśli aplikacja wystawia endpoint "zdrowia")
+# Przykład dla serwera HTTP na :8000
+# HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
+#   CMD wget -qO- http://localhost:8000/health || exit 1
+
+# Przykładowy port (jeśli serwer HTTP)
+EXPOSE 8000
+
+# Przechodzimy na użytkownika nie-root
+USER app
+
+# Domyślne polecenie – w realnym projekcie dostosuj do aplikacji
+# Tu dla przykładu uruchamiamy prosty serwer HTTP Pythona
+CMD ["python", "-m", "http.server", "8000"]
