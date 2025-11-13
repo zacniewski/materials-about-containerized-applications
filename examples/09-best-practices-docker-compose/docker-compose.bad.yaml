@@ -1,0 +1,51 @@
+# Antywzorce docker-compose – NIE NAŚLADUJ TEGO
+# Poniżej umyślnie pokazujemy złe praktyki, aby łatwiej je rozpoznać podczas przeglądu kodu.
+
+name: demo-bad-practices
+
+services:
+  app:
+    image: python:latest  # złe: 'latest' powoduje nieprzewidywalność
+    container_name: app   # nazwy kontenerów często lepiej generować automatycznie
+    command: python -m http.server 8000
+    working_dir: /app
+    volumes:
+      - ./:/app  # w prod to ryzyko; niepotrzebny bind-mount może mieszać w środowisku
+    environment:
+      # złe: twardo wpisane sekrety i konfiguracja w YAML
+      POSTGRES_PASSWORD: supersecret
+      POSTGRES_USER: admin
+      POSTGRES_DB: appdb
+      TZ: Europe/Warsaw
+    ports:
+      - "8000:8000"
+    # brak healthcheck – orchestrator nie wie, kiedy usługa jest gotowa
+    depends_on: [db]  # brak condition: service_healthy – kolejność może być błędna
+    networks:
+      - default  # brak separacji sieci
+    # brak restart policy
+
+  db:
+    image: postgres:latest  # złe: 'latest'
+    # brak wolumenu danych – po `down -v`/odtworzeniu wszystko znika
+    environment:
+      POSTGRES_PASSWORD: supersecret  # twardo wpisany sekret
+      POSTGRES_USER: admin
+      POSTGRES_DB: appdb
+    # brak healthcheck
+    # złe: tryb uprzywilejowany (często niepotrzebny i niebezpieczny)
+    privileged: true
+    # nadużycie host networking (omija izolację i może kolidować z portami)
+    network_mode: host
+
+  redis:
+    image: redis  # brak przypiętego tagu
+    # brak trwałości danych (AOF/RDB), brak wolumenu
+
+  nginx:
+    image: nginx  # brak tagu
+    ports:
+      - "8080:80"
+    # brak zależności/healthcheck, brak sieci front/back
+
+# brak zdefiniowanych networks i volumes – mieszanie wszystkiego w 'default'

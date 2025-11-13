@@ -1,0 +1,120 @@
+# Compose Spec: dobry, skomentowany przykład dla Python/Django (bez override)
+# Uwaga: używaj polecenia `docker compose` (CLI v2).
+# Plik demonstruje: przypięte tagi, env_file/.env, healthcheck, depends_on z service_healthy,
+# separację sieci, named volumes (dane DB/Redis i statyczne pliki), ujednolicone logowanie,
+# restart policy oraz rozsądne domyślne komendy.
+
+name: demo-best-practices-django
+
+x-logging: &default-logging
+  driver: json-file
+  options:
+    max-size: "10m"
+    max-file: "3"
+
+x-common-env: &common-env
+  TZ: ${TZ:-UTC}
+  APP_ENV: ${APP_ENV:-production}
+
+services:
+  web:
+    # W realnym projekcie zazwyczaj użyjesz `build:` z Dockerfile swojej aplikacji Django.
+    # Poniżej używamy publicznego obrazu Pythona z przypiętym tagiem i prostą komendą.
+    image: python:3.12-slim
+    container_name: demo-django-web
+    working_dir: /app
+    command: ["python", "-m", "http.server", "${APP_PORT:-8000}"]
+    # Dla Django zamiast powyższego byłoby np.:
+    # command: ["gunicorn", "weatherproj.wsgi:application", "-b", "0.0.0.0:8000", "-w", "3"]
+    env_file:
+      - .env
+    environment:
+      <<: *common-env
+      # Uwaga: Nie umieszczaj sekretów w YAML. Użyj pliku .env lub managera sekretów.
+      # DJANGO_SETTINGS_MODULE: weatherproj.settings
+      # DJANGO_ALLOWED_HOSTS: 127.0.0.1,localhost
+    ports:
+      - "${APP_PORT:-8000}:8000"
+    volumes:
+      - app-static:/app/staticfiles
+      - app-media:/app/media
+    healthcheck:
+      # Używamy Pythona zamiast wget/curl (których nie ma w slim) do sprawdzenia HTTP 200
+      test: ["CMD-SHELL", "python - <<'PY'\nimport sys, urllib.request\ntry:\n    with urllib.request.urlopen('http://localhost:8000', timeout=2) as r:\n        sys.exit(0 if r.status == 200 else 1)\nexcept Exception:\n    sys.exit(1)\nPY"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    networks:
+      - backend
+      - frontend
+    restart: unless-stopped
+    logging: *default-logging
+
+  db:
+    image: postgres:16
+    container_name: demo-django-db
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:?set in .env}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set in .env}
+      POSTGRES_DB: ${POSTGRES_DB:-appdb}
+      <<: *common-env
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB:-appdb}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+    networks:
+      - backend
+    restart: unless-stopped
+    logging: *default-logging
+
+  redis:
+    image: redis:7-alpine
+    container_name: demo-django-redis
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redisdata:/data
+    networks:
+      - backend
+    restart: unless-stopped
+    logging: *default-logging
+
+  # Opcjonalny reverse-proxy (np. dla statycznych plików lub SSL). Tu tylko demonstracja.
+  nginx:
+    image: nginx:1.27-alpine
+    container_name: demo-django-nginx
+    depends_on:
+      web:
+        condition: service_healthy
+    ports:
+      - "${WEB_PORT:-8080}:80"
+    # W realnym projekcie dodaj własne konfigi nginx (mount pliku conf). Tu pomijamy dla prostoty.
+    networks:
+      - frontend
+    restart: unless-stopped
+    logging: *default-logging
+
+networks:
+  frontend:
+    name: demo-frontend
+  backend:
+    name: demo-backend
+
+volumes:
+  app-static:
+    name: demo-app-static
+  app-media:
+    name: demo-app-media
+  pgdata:
+    name: demo-pgdata
+  redisdata:
+    name: demo-redisdata
