@@ -44,10 +44,10 @@ flowchart LR
       IN[Klient/Przeglądarka]
     end
     subgraph Docker
-      subgraph frontend[frontend (user-defined)]
+      subgraph frontend[frontend — user-defined]
         RP[reverse-proxy] --> APP[app]
       end
-      subgraph backend[backend (internal)]
+      subgraph backend[backend — internal]
         APP --> DB[(db)]
       end
     end
