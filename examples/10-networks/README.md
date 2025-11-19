@@ -41,16 +41,17 @@ W sieciach użytkownika (user-defined bridge) działa automatyczne rozwiązywani
 ```mermaid
 flowchart LR
     subgraph Host
-      IN[Klient/Przeglądarka] -->|HTTP :8080| RP[reverse-proxy]
+      IN[Klient/Przeglądarka]
     end
     subgraph Docker
       subgraph frontend[frontend (user-defined)]
-        RP --> APP[app]
+        RP[reverse-proxy] --> APP[app]
       end
       subgraph backend[backend (internal)]
         APP --> DB[(db)]
       end
     end
+    IN -->|HTTP :8080| RP
 ```
 
 Reverse proxy (np. nginx) jest w sieci `frontend` i widoczny z hosta. Aplikacja łączy oba światy (frontend+backend). Baza danych jest wyłącznie w sieci `backend` i nie ma opublikowanych portów.
