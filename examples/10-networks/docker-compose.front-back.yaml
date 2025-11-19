@@ -1,0 +1,61 @@
+version: "3.8"
+
+# Segmentacja sieci: frontend (widoczna z hosta) i backend (wewnętrzna)
+# Usługi:
+# - reverse-proxy (nginx) w sieci frontend, publikuje port 8080
+# - app (demo API) w obu sieciach: frontend<->backend
+# - db (PostgreSQL) tylko w sieci backend, bez publikowania portów
+
+services:
+  reverse-proxy:
+    image: nginx:1.27-alpine
+    container_name: networks_fb_reverse_proxy
+    ports:
+      - "8080:80"
+    volumes:
+      - type: tmpfs
+        target: /var/cache/nginx
+      - type: bind
+        source: ./nginx.conf
+        target: /etc/nginx/conf.d/default.conf
+        read_only: true
+    networks:
+      - frontend
+    depends_on:
+      app:
+        condition: service_started
+
+  app:
+    image: ealen/echo-server:0.9.1
+    # Prosty serwer echo na porcie 80; dostępny dla reverse-proxy i ma dostęp do backendu
+    container_name: networks_fb_app
+    environment:
+      LOG_WITH_COLOR: "true"
+    networks:
+      - frontend
+      - backend
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:16-alpine
+    container_name: networks_fb_db
+    environment:
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: example
+      POSTGRES_DB: appdb
+    networks:
+      - backend
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U app -d appdb"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+networks:
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge
+    internal: true

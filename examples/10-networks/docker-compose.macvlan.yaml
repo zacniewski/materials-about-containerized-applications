@@ -1,0 +1,32 @@
+version: "3.8"
+
+# UWAGA (zaawansowane): macvlan sprawia, że kontenery pojawiają się w twojej sieci LAN
+# jak osobne hosty. Zwykle NIE jest to potrzebne w dev. Wymaga dopasowania poniższych
+# parametrów do twojej infrastruktury (interfejs, podsieć, brama itp.).
+#
+# Kroki przed uruchomieniem:
+# 1) Ustal interfejs fizyczny (np. `ip link` → eth0, enp3s0 itp.).
+# 2) Ustal właściwą podsieć i bramę LAN (np. 192.168.1.0/24, gateway 192.168.1.1).
+# 3) Wybierz nieużywany adres IP dla kontenera (np. 192.168.1.50).
+# 4) Zmień wartości w sekcji `networks.macvlan.*` poniżej.
+# 5) Uruchom: `docker compose -f docker-compose.macvlan.yaml up -d`.
+
+services:
+  web:
+    image: nginxdemos/hello:latest
+    container_name: networks_macvlan_web
+    # Dla macvlan nie publikujemy portów (brak "ports:"), kontener ma IP w LAN
+    networks:
+      macvlan:
+        ipv4_address: 192.168.1.50   # <-- ZMIEŃ na wolny adres w twojej sieci
+
+networks:
+  macvlan:
+    driver: macvlan
+    driver_opts:
+      parent: eth0                    # <-- ZMIEŃ na interfejs twojego hosta
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.1.0/24     # <-- ZMIEŃ na twoją podsieć
+          gateway: 192.168.1.1       # <-- ZMIEŃ na bramę sieci

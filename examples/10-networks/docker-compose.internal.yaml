@@ -1,0 +1,34 @@
+version: "3.8"
+
+# Wewnętrzna sieć (internal: true):
+# - app: wystawiona na hosta (http://localhost:8081), ma dostęp do Redis po nazwie 'cache'
+# - cache (Redis): tylko w sieci wewnętrznej, brak portów na hosta
+
+services:
+  app:
+    image: node:22-alpine
+    container_name: networks_internal_app
+    command: sh -c "npm -v && node -e \"require('http').createServer((req,res)=>res.end('ok')).listen(3000)\""
+    ports:
+      - "8081:3000"
+    networks:
+      - backend
+    depends_on:
+      cache:
+        condition: service_healthy
+
+  cache:
+    image: redis:7-alpine
+    container_name: networks_internal_cache
+    networks:
+      - backend
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+networks:
+  backend:
+    driver: bridge
+    internal: true
