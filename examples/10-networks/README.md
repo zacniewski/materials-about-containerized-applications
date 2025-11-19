@@ -14,10 +14,10 @@ Poniżej znajdziesz krótką instrukcję oraz gotowe pliki `docker-compose` poka
 ```mermaid
 flowchart LR
     subgraph Host
-      subgraph Default bridge
+      subgraph default_bridge[Default bridge]
         A[container a] --- B[container b]
       end
-      subgraph User-defined bridge: appnet
+      subgraph appnet[User-defined bridge: appnet]
         C[web] --- D[app]
         D --- E[db]
       end
@@ -44,10 +44,10 @@ flowchart LR
       IN[Klient/Przeglądarka] -->|HTTP :8080| RP[reverse-proxy]
     end
     subgraph Docker
-      subgraph frontend (user-defined)
+      subgraph frontend[frontend (user-defined)]
         RP --> APP[app]
       end
-      subgraph backend (internal)
+      subgraph backend[backend (internal)]
         APP --> DB[(db)]
       end
     end
