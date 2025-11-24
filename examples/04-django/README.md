@@ -80,11 +80,14 @@ sequenceDiagram
   Dev->>Docker: docker compose up --build
   Docker->>Docker: Build image from context '.'
   Docker->>C: Create & start container
-  Note over C: working_dir=/app<br/>Volumes: ./ to /app<br/>Env vars set
+  Note over C: working_dir=/app
+  Note over C: Volume: ./ to /app
+  Note over C: Environment variables set
   C->>Django: python manage.py migrate --noinput
   Django-->>C: Applies migrations (SQLite or configured DB)
   C->>Django: python manage.py runserver 0.0.0.0:8000
-  Note over C,Docker: Expose port 8000; map host 8000 to container 8000
+  Note over C: Exposes port 8000
+  Note over Docker: Host port 8000 mapped to container 8000
   Dev->>Django: Open http://localhost:8000
 ```
 
