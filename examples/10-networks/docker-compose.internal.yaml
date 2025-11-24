@@ -1,5 +1,3 @@
-version: "3.8"
-
 # Wewnętrzna sieć (internal: true):
 # - app: wystawiona na hosta (http://localhost:8081), ma dostęp do Redis po nazwie 'cache'
 # - cache (Redis): tylko w sieci wewnętrznej, brak portów na hosta

@@ -1,5 +1,3 @@
-version: "3.8"
-
 # UWAGA (zaawansowane): macvlan sprawia, że kontenery pojawiają się w twojej sieci LAN
 # jak osobne hosty. Zwykle NIE jest to potrzebne w dev. Wymaga dopasowania poniższych
 # parametrów do twojej infrastruktury (interfejs, podsieć, brama itp.).

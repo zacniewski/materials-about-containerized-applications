@@ -1,5 +1,3 @@
-version: "3.8"
-
 # Segmentacja sieci: frontend (widoczna z hosta) i backend (wewnętrzna)
 # Usługi:
 # - reverse-proxy (nginx) w sieci frontend, publikuje port 8080
