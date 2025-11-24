@@ -51,14 +51,14 @@ flowchart LR
     subgraph Container: django-open-meteo
       App["Django App (manage.py)"]
       WorkDir["working_dir = /app"]
-      Bind((Bind Mount /app <- ./))
+      Bind((Bind Mount /app ← ./))
       Env["Environment:\n- DJANGO_DEBUG=1\n- DJANGO_SECRET_KEY=...\n- DJANGO_ALLOWED_HOSTS=*\n- TZ=Europe/Warsaw"]
     end
   end
 
   Dev -->|docker compose up --build| Engine
   Engine -->|Build from context: .| App
-  FS -->|bind mount ./ -> /app| Bind
+  FS -->|bind mount ./ → /app| Bind
 
   Browser <--> |http://localhost:8000| Engine
   Engine <--> |port mapping 8000:8000| App
@@ -80,11 +80,11 @@ sequenceDiagram
   Dev->>Docker: docker compose up --build
   Docker->>Docker: Build image from context '.'
   Docker->>C: Create & start container
-  Note over C: working_dir=/app\nVolumes: ./ -> /app\nEnv vars set
+  Note over C: working_dir=/app\nVolumes: ./ → /app\nEnv vars set
   C->>Django: python manage.py migrate --noinput
   Django-->>C: Applies migrations (SQLite or configured DB)
   C->>Django: python manage.py runserver 0.0.0.0:8000
-  Note over C,Docker: Expose 8000; Map Host 8000 -> Container 8000
+  Note over C,Docker: Expose 8000; Map Host 8000 → Container 8000
   Dev->>Django: Open http://localhost:8000
 ```
 
