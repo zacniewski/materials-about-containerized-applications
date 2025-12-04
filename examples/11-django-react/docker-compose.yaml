@@ -1,0 +1,40 @@
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: ./backend
+    container_name: django-react-backend
+    command: bash -lc "python manage.py makemigrations --noinput && python manage.py migrate --noinput && python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - "8000:8000"
+    environment:
+      - DJANGO_DEBUG=1
+      - DJANGO_SECRET_KEY=change-me-in-dev
+      - DJANGO_ALLOWED_HOSTS=*
+      - CORS_ORIGINS=http://localhost:5173
+      - TZ=Europe/Warsaw
+    volumes:
+      - ./backend:/app
+    working_dir: /app
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: django-react-frontend
+    command: bash -lc "npm install && npm run dev -- --host 0.0.0.0 --port 5173"
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_BASE=http://localhost:8000
+      - TZ=Europe/Warsaw
+    volumes:
+      - ./frontend:/usr/src/app
+      - /usr/src/app/node_modules
+    working_dir: /usr/src/app
+    depends_on:
+      - backend
+
+networks:
+  default:
+    name: django-react-net
