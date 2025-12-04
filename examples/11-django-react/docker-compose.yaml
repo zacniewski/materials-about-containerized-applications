@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   backend:
     build:
@@ -22,7 +20,7 @@ services:
     build:
       context: ./frontend
     container_name: django-react-frontend
-    command: bash -lc "npm install && npm run dev -- --host 0.0.0.0 --port 5173"
+    command: sh -lc "npm install && npm run dev -- --host 0.0.0.0 --port 5173"
     ports:
       - "5173:5173"
     environment:
