@@ -6,12 +6,32 @@
   - :zap: konto na [DockerHub](https://hub.docker.com/),  
   - :zap: konto na [Coursera](https://www.coursera.org/).  
 
-#### II. Laboratoria online
+#### II. Czym jest Docker? (Krótkie wprowadzenie)
+Docker to platforma umożliwiająca programistom i administratorom budowanie, dostarczanie i uruchamianie aplikacji w kontenerach. Konteneryzacja pozwala na izolację aplikacji od środowiska hosta, zapewniając spójność działania na różnych systemach.
+
+**Kluczowe pojęcia:**
+- **Obraz (Image):** Nieaktywny szablon (np. z systemem i aplikacją), z którego tworzy się kontenery.
+- **Kontener (Container):** Uruchomiona instancja obrazu.
+- **Dockerfile:** Skrypt zawierający instrukcje budowania obrazu.
+- **Docker Compose:** Narzędzie do definiowania i uruchamiania wielokontenerowych aplikacji.
+
+**Architektura Dockera:**
+```mermaid
+graph TD
+    Client[Docker Client] --> |Commands| Daemon[Docker Daemon]
+    Daemon --> |Pull/Push| Registry[Docker Registry / Hub]
+    Daemon --> |Manage| Images[Images]
+    Daemon --> |Manage| Containers[Containers]
+    Daemon --> |Manage| Networks[Networks]
+    Daemon --> |Manage| Volumes[Volumes]
+```
+
+#### III. Laboratoria online
   - Play with Docker [labs](https://labs.play-with-docker.com/) (wymagane konto na `DockerHub`),    
   - :zap: Play with Docker [trainings](https://training.play-with-docker.com/) (wymagane konto na `DockerHub`),    
   > dla powyższego laboratorium (trainings) można wybrać między 'IT Pros and System Administrators' a 'Developers'.
 
-#### III. Pożyteczne linki
+#### IV. Pożyteczne linki
   - [Docker](https://github.com/delner/docker-training/blob/master/README.md) training,  
   - [DevOps with Docker](https://devopswithdocker.com/) course (i także na [GitHub'ie](https://github.com/docker-hy/docker-hy.github.io)),  
   - [DevOps with Kubernetes](https://devopswithkubernetes.com/) training,  
@@ -19,13 +39,37 @@
   - [Kurs Dockera](https://www.youtube.com/playlist?list=PLkcy-k498-V5AmftzfqinpMF2LFqSHK5n) by Programator (wersja PL),  
   - [Docker Tutorial for Beginners](https://www.youtube.com/watch?v=3c-iBn73dDE&t=118s) by TechWorld with Nana.  
 
+#### V. Główne komponenty i pojęcia (Tabela)
+| Pojęcie | Opis | Przykład użycia |
+|---------|------|----------------|
+| **Image** | Statyczny plik z kodem i zależnościami. | `docker pull nginx` |
+| **Container** | Uruchomiona instancja obrazu. | `docker run nginx` |
+| **Volume** | Trwały magazyn danych poza kontenerem. | `docker run -v data:/app/data` |
+| **Network** | Izolowana sieć dla komunikacji kontenerów. | `docker network create my-net` |
+| **Compose** | Narzędzie do orkiestracji wielu kontenerów. | `docker compose up` |
 
-#### IV. Zawartość repozytorium
+#### VI. Cykl życia kontenera
+Zrozumienie stanów kontenera jest kluczowe dla efektywnej pracy z Dockerem.
+
+```mermaid
+stateDiagram-v2
+    [*] --> Created: docker create
+    Created --> Running: docker start
+    Running --> Stopped: docker stop
+    Stopped --> Running: docker start
+    Running --> Paused: docker pause
+    Paused --> Running: docker unpause
+    Running --> [*]: docker rm -f
+    Stopped --> [*]: docker rm
+    Created --> [*]: docker rm
+```
+
+#### VI. Zawartość repozytorium
   - :zap: folder [basic-docker-training](basic-docker-training/README.md) zawiera standardowe ćwiczenia z Dockera,  
   - :zap: folder [devops-with-docker](devops-with-docker) zawiera uaktualnioną wersję kursu 'DevOps with Docker',  
   - :zap: folder [final-repo-structure](final-repo-structure) zawiera sugerowaną strukturę repozytorium zaliczeniowego.  
 
-#### V. Podział na bloki laboratoryjne
+#### VII. Podział na bloki laboratoryjne
 > Każdy blok składa się z trzech godzin zajęć,  
 > planowanych jest 20 bloków (3 godz. x 20 = 60 godz.), w tym 1 blok "rezerwowy" (w razie potrzeby ukończenia pozostałych bloków).    
 
@@ -46,7 +90,7 @@
 Czyli Dockerfile, docker-compose, usługi, uruchamianie skryptów typu `wait-for`, wolumeny z danymi/bazami danych, logi, inspekcja, itd.
 Może to być np. aplikacja webowa lub inny projekt, gdzie korzysta się z możliwości Dockera.  
 
-#### VI. Zadania do realizacji (we wszystkich blokach)
+#### VIII. Zadania do realizacji (we wszystkich blokach)
   - należy przeanalizować wszystkie ćwiczenia, wykonując na swoim komputerze wszystkie wyszczególnione komendy,
   - dla przykładu w ćwiczeniu `1-running-containers` tam, gdzie napisane jest 'wymagany screenshot XY', należy dokonać zapisu bieżącego stanu terminala poprzez tzw. screenshot, a plik ze zrzutem ekranu nazwać `XY.png`, gdzie XY to wyszczególniony numer,  
   > Podobnie należy postąpić we **wszystkich** pozostałych ćwiczeniach (również tym z Coursery)!
@@ -54,7 +98,7 @@ Może to być np. aplikacja webowa lub inny projekt, gdzie korzysta się z możl
   - można np. nazwać folder roboczy `kontenery-123456`, gdzie `123456` to numer indeksu :smiley:,  
   - ww. plik umieszczamy w pliku `README.md`, dotyczącym danego ćwiczenia, wraz z krótkim poprzedzającym go opisem, np. 'Lista wszystkich kontenerów' itp.   
 
-#### VII. Pytania, które mogą się pojawić na zaliczeniu (egzaminie)
+#### IX. Pytania, które mogą się pojawić na zaliczeniu (egzaminie)
 1. Utwórz plik z obrazem `Dockerfile`, w którym z hosta do kontenera kopiowany będzie folder `code` (zawiera np. jeden skrypt w języku Python :snake:) i zbuduj go:  
     - uruchom ww. skrypt wewnątrz kontenera.
 2. Skopiuj wybrany plik tekstowy z hosta (swojego komputera) do kontenera Dockerowego.
