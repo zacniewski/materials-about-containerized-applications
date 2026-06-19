@@ -12,7 +12,6 @@ To run containers, we'll first need to pull some images.
     artur@Artur-PC:~/Desktop/PROJECTS/materials-about-containerized-applications$ docker images
     REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
     ```
-    >:exclamation: **Wymagany screenshot 01!**
 
 2. On a fresh Docker installation, we should have no images. Let's pull one from Dockerhub.
 
@@ -43,21 +42,19 @@ To run containers, we'll first need to pull some images.
     ubuntu/dotnet-deps               Chiselled Ubuntu for self-contained .NET & A…   16        
     ubuntu/dotnet-aspnet             Chiselled Ubuntu runtime image for ASP.NET a…   22        
     ```
-    >:exclamation: **Wymagany screenshot 02!**
 
     You can also find images online at [DockerHub](https://hub.docker.com/).
 
     Run `docker pull ubuntu:22.04` to pull an image of Ubuntu 22.04 from DockerHub.
 
     ```
-    $ docker pull ubuntu:22:04
+    $ docker pull ubuntu:22.04
     22.04: Pulling from library/ubuntu
     857cc8cb19c0: Pull complete 
     Digest: sha256:adbb90115a21969d2fe6fa7f9af4253e16d45f8d4c1e930182610c4731962658
     Status: Downloaded newer image for ubuntu:22.04
     docker.io/library/ubuntu:22.04
     ```  
-    >:exclamation: **Wymagany screenshot 03!**
 
 3. We can also pull different versions on the same image.
 
@@ -70,16 +67,14 @@ To run containers, we'll first need to pull some images.
     Status: Downloaded newer image for ubuntu:22.10
     docker.io/library/ubuntu:22.10
     ```
-    >:exclamation: **Wymagany screenshot 04!**
     
-    Then, when we run `docker images again, we should get:
+    Then, when we run `docker images` again, we should get:
 
     ```
     REPOSITORY   TAG       IMAGE ID       CREATED         SIZE
     ubuntu       22.04     53a843653cbc   4 weeks ago     77.9MB
     ubuntu       22.10     692eb4a905c0   14 months ago   70.3MB
     ```
-    >:exclamation: **Wymagany screenshot 05!**
 
 4.  Over time, your machine can collect a lot of images, so it's nice to remove unwanted images.
     Run `docker rmi <IMAGE ID>` to remove the Ubuntu 22.10 image we won't be using.
@@ -91,7 +86,6 @@ To run containers, we'll first need to pull some images.
     Deleted: sha256:692eb4a905c074054e0a35d647671f0e32ed150d15b23fd7bc745cfb2fdeddbd
     Deleted: sha256:1e8bb0620308641104e68d66f65c1e51de68d7df7240b8a99a251338631c6911
     ```
-    >:exclamation: **Wymagany screenshot 06!**
 
     Alternatively, you can delete images by tag or by a partial image ID. In the previous example, the following would have been equivalent:  
      - `docker rmi 69`
@@ -104,9 +98,8 @@ To run containers, we'll first need to pull some images.
     REPOSITORY   TAG       IMAGE ID       CREATED       SIZE
     ubuntu       22.04     53a843653cbc   4 weeks ago   77.9MB
     ```
-    >:exclamation: **Wymagany screenshot 07!**
 
-    Skrót do usuwania wszystkich obrazów z systemu to `docker rmi $(docker images -a -q)`
+    The shortcut to remove all images from the system is `docker rmi $(docker images -a -q)`
     ```
     $ docker rmi $(docker images -a -q)
     Untagged: ubuntu:22.04
@@ -114,7 +107,6 @@ To run containers, we'll first need to pull some images.
     Deleted: sha256:53a843653cbcd9e10be207e951d907dc2481d9c222de57d24cfcac32e5165188
     Deleted: sha256:1b9b7346fee7abbc7f5538eaa23548bd05a45abe8daf6794024be0c8ad7d60bb
     ```
-    >:exclamation: **Wymagany screenshot 08!**
 
 ### Running our container
 
@@ -123,7 +115,7 @@ Using the Ubuntu 16.04 image we downloaded, we can run a first container. Unlike
 The command can be anything you want, as long as it exists on the image. In the case of the Ubuntu image, it's a Linux kernel with many of the typical applications you'd find in a basic Linux environment.
 
 1.  Let's do a very simple example. Run `docker run ubuntu:22.04 /bin/echo 'Hello world!'`
-    If we removed images earlier, it will be pulledagain.
+    If we removed images earlier, it will be pulled again.
 
     ```
     $ docker run ubuntu:22.04 /bin/echo 'Hello world!'
@@ -134,7 +126,6 @@ The command can be anything you want, as long as it exists on the image. In the 
     Status: Downloaded newer image for ubuntu:22.04
     Hello world!
     ```
-    >:exclamation: **Wymagany screenshot 09!**
 
     The `/bin/echo` command is a really simple application that just prints whatever you give it to the terminal. 
     We passed it 'Hello world!', so it prints `Hello world!` to the terminal.
@@ -148,7 +139,6 @@ The command can be anything you want, as long as it exists on the image. In the 
     $ docker ps
     CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
     ```
-    >:exclamation: **Wymagany screenshot 10!**
 
     That's strange: no containers right? 
     The `ps` command doesn't show stopped containers by default, add the `-a` flag.
@@ -159,7 +149,6 @@ The command can be anything you want, as long as it exists on the image. In the 
     7ed5e2746181   ubuntu:22.04   "/bin/echo 'Hello wo…"   18 minutes ago   Exited (0) 18 minutes ago             heuristic_bhaskara
     ```  
    
-    >:exclamation: **Wymagany screenshot 11!**
 
     Okay, there's our container. But why is the status "Exited"?  
     Documentation says:  *Docker containers only run as long as the command it starts with is running.*  
@@ -173,7 +162,6 @@ The command can be anything you want, as long as it exists on the image. In the 
     $ docker run ubuntu:22.04 /bin/bash
     $
     ```
-    >:exclamation: **Wymagany screenshot 12!**
 
     Notice nothing happened. When we run `docker ps -a`:  
 
@@ -183,7 +171,6 @@ The command can be anything you want, as long as it exists on the image. In the 
     8ce9e62ee76c   ubuntu:22.04   "/bin/bash"              15 seconds ago   Exited (0) 15 seconds ago             gifted_jemison
     7ed5e2746181   ubuntu:22.04   "/bin/echo 'Hello wo…"   25 minutes ago   Exited (0) 25 minutes ago             heuristic_bhaskara
     ```
-    >:exclamation: **Wymagany screenshot 13!**
 
     The container exited instantly. Why? We were running the `/bin/bash` command, which is an interactive program. 
     However, the `docker run` command doesn't run interactively by default, therefore the `/bin/bash` command exited, and the container stopped.
@@ -194,7 +181,6 @@ The command can be anything you want, as long as it exists on the image. In the 
     $ docker run -it ubuntu:22.04 /bin/bash
     root@94ff3d83e360:/# 
     ```
-    >:exclamation: **Wymagany screenshot 14!**
 
     This looks a lot better. This means you're in a BASH session inside the Ubuntu container. 
     Notice you're running as `root` and the container ID that follows.  
@@ -206,7 +192,6 @@ The command can be anything you want, as long as it exists on the image. In the 
     root@94ff3d83e360:/# ls
     bin  boot  dev  etc  home  lib  lib32  lib64  libx32  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
     ```
-    >:exclamation: **Wymagany screenshot 15!**
 
     You can type `exit` to end the BASH session, terminating the command and stopping the container.
 
@@ -229,7 +214,6 @@ The command can be anything you want, as long as it exists on the image. In the 
       44c6bab63669624f080f4044e4a47465204c2351d46a1e8b5df0f255973eccb4
     $
     ```
-    >:exclamation: **Wymagany screenshot 16!**
 
     If we check the container, we can see it's running the sleep command in a new container.
 
@@ -239,7 +223,6 @@ The command can be anything you want, as long as it exists on the image. In the 
       9a14abef4c10   ubuntu:22.04   "/bin/sleep 3600"   46 minutes ago   Up 46 minutes             stupefied_germain
     $
     ```
-    >:exclamation: **Wymagany screenshot 17!**
 
 5. Now that the container is running in the background, what if we want to reattach to it?
 
@@ -257,7 +240,6 @@ The command can be anything you want, as long as it exists on the image. In the 
     root@9a14abef4c10:/# 
 
     ```
-    >:exclamation: **Wymagany screenshot 18!**
 
     The container ID appearing at the front of the BASH prompt tells us we're inside the container. 
     Once inside a session, we can interact with the container like any SSH session.
@@ -272,7 +254,6 @@ The command can be anything you want, as long as it exists on the image. In the 
     root          15  0.0  0.0   7064  2816 pts/0    R+   11:59   0:00 ps aux
     root@9a14abef4c10:/#
     ```
-    >:exclamation: **Wymagany screenshot 19!**
 
     There we can see our running `/bin/sleep 3600` command. 
     Whenever we're done, we can type `exit` to exit our current BASH session, and leave the container running.
@@ -284,7 +265,6 @@ The command can be anything you want, as long as it exists on the image. In the 
     CONTAINER ID   IMAGE          COMMAND             CREATED          STATUS          PORTS     NAMES
     2041f1c61c29   ubuntu:22.04   "/bin/sleep 3600"   21 seconds ago   Up 21 seconds             cool_taussig
     ```
-    >:exclamation: **Wymagany screenshot 20!**
 
     And finally checking `docker ps`, we can see the container is still running.
 
@@ -298,7 +278,6 @@ The command can be anything you want, as long as it exists on the image. In the 
     $ docker stop 2041
     2041
     ```
-    >:exclamation: **Wymagany screenshot 21!**
 
     Then checking `docker ps -a`...
 
@@ -308,7 +287,6 @@ The command can be anything you want, as long as it exists on the image. In the 
     2041f1c61c29   ubuntu:22.04   "/bin/sleep 3600"        2 minutes ago   Exited (137) 38 seconds ago             cool_taussig
     $
     ```
-    >:exclamation: **Wymagany screenshot 22!**
 
     We can see that it exited with code `137`, which in Linux world means the command was likely aborted with a `kill -9` command.
 
@@ -324,7 +302,6 @@ The command can be anything you want, as long as it exists on the image. In the 
     a32fa5684874   ubuntu:22.04   "/bin/echo 'Hello wo…"   23 hours ago     Exited (0) 23 hours ago                 modest_bassi
     $
     ```
-    >:exclamation: **Wymagany screenshot 23!**
 
     From our previous example, we can see with `docker ps -a` that we have a container hanging around.
 

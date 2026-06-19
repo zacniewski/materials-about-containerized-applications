@@ -15,6 +15,8 @@
   - [DevOps with Docker](https://devopswithdocker.com/) course (i także na [GitHub'ie](https://github.com/docker-hy/docker-hy.github.io)),
   - [DevOps with Kubernetes](https://devopswithkubernetes.com/) training.
 
+> Dodatkowe, pomocne materiały do ćwiczeń znajdują się w folderze [`supporting-materials/basic-docker-training/`](supporting-materials/basic-docker-training/README.md) (wersje PL/EN).
+
 ---
 
 #### III. Wykłady (20 godz. — 10 × 2 godz.)

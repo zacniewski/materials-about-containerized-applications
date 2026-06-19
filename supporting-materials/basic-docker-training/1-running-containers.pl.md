@@ -12,7 +12,6 @@ Aby uruchamiać kontenery, najpierw musimy pobrać kilka obrazów.
     artur@Artur-PC:~/Desktop/PROJECTS/materials-about-containerized-applications$ docker images
     REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
     ```
-    >:exclamation: **Wymagany screenshot 01!**
 
 2. W świeżej instalacji Dockera nie powinniśmy mieć żadnych obrazów. Pobierzmy więc jeden z DockerHuba.
 
@@ -43,21 +42,19 @@ Aby uruchamiać kontenery, najpierw musimy pobrać kilka obrazów.
     ubuntu/dotnet-deps               Chiselled Ubuntu for self-contained .NET & A…   16        
     ubuntu/dotnet-aspnet             Chiselled Ubuntu runtime image for ASP.NET a…   22        
     ```
-    >:exclamation: **Wymagany screenshot 02!**
 
     Obrazy znajdziesz też w sieci na [DockerHub](https://hub.docker.com/).
 
     Uruchom `docker pull ubuntu:22.04`, aby pobrać obraz Ubuntu 22.04 z DockerHuba.
 
     ```
-    $ docker pull ubuntu:22:04
+    $ docker pull ubuntu:22.04
     22.04: Pulling from library/ubuntu
     857cc8cb19c0: Pull complete 
     Digest: sha256:adbb90115a21969d2fe6fa7f9af4253e16d45f8d4c1e930182610c4731962658
     Status: Downloaded newer image for ubuntu:22.04
     docker.io/library/ubuntu:22.04
     ```  
-    >:exclamation: **Wymagany screenshot 03!**
 
 3. Możemy też pobrać inne wersje tego samego obrazu.
 
@@ -70,7 +67,6 @@ Aby uruchamiać kontenery, najpierw musimy pobrać kilka obrazów.
     Status: Downloaded newer image for ubuntu:22.10
     docker.io/library/ubuntu:22.10
     ```
-    >:exclamation: **Wymagany screenshot 04!**
     
     Następnie, gdy uruchomimy `docker images`, powinniśmy zobaczyć:
 
@@ -79,7 +75,6 @@ Aby uruchamiać kontenery, najpierw musimy pobrać kilka obrazów.
     ubuntu       22.04     53a843653cbc   4 weeks ago     77.9MB
     ubuntu       22.10     692eb4a905c0   14 months ago   70.3MB
     ```
-    >:exclamation: **Wymagany screenshot 05!**
 
 4.  Z czasem na Twojej maszynie może zebrać się wiele obrazów, więc dobrze jest usuwać te niepotrzebne.
     Uruchom `docker rmi <IMAGE ID>`, aby usunąć obraz Ubuntu 22.10, którego nie będziemy używać.
@@ -91,7 +86,6 @@ Aby uruchamiać kontenery, najpierw musimy pobrać kilka obrazów.
     Deleted: sha256:692eb4a905c074054e0a35d647671f0e32ed150d15b23fd7bc745cfb2fdeddbd
     Deleted: sha256:1e8bb0620308641104e68d66f65c1e51de68d7df7240b8a99a251338631c6911
     ```
-    >:exclamation: **Wymagany screenshot 06!**
 
     Alternatywnie, obrazy można usuwać po tagu lub po częściowym ID. W poprzednim przykładzie równoważne byłyby:
      - `docker rmi 69`
@@ -104,7 +98,6 @@ Aby uruchamiać kontenery, najpierw musimy pobrać kilka obrazów.
     REPOSITORY   TAG       IMAGE ID       CREATED       SIZE
     ubuntu       22.04     53a843653cbc   4 weeks ago   77.9MB
     ```
-    >:exclamation: **Wymagany screenshot 07!**
 
     Skrót do usuwania wszystkich obrazów z systemu to `docker rmi $(docker images -a -q)`
     ```
@@ -119,7 +112,6 @@ Aby uruchamiać kontenery, najpierw musimy pobrać kilka obrazów.
     $ docker run -it --name ubuntu-shell ubuntu:22.04 /bin/bash
     root@<CONTAINER_ID>:/#
     ```
-    >:exclamation: **Wymagany screenshot 08!**
 
 2. W nowej powłoce spróbuj uruchomić kilka komend, np. `ls`, `pwd`, a następnie wyjdź z kontenera komendą `exit`.
 
@@ -128,14 +120,12 @@ Aby uruchamiać kontenery, najpierw musimy pobrać kilka obrazów.
     ```
     $ docker ps -a
     ```
-    >:exclamation: **Wymagany screenshot 09!**
 
 3. Uruchom ponownie ten sam kontener:
 
     ```
     $ docker start -i ubuntu-shell
     ```
-    >:exclamation: **Wymagany screenshot 10!**
 
 4. Zatrzymaj kontener i go usuń:
 
@@ -144,7 +134,6 @@ Aby uruchamiać kontenery, najpierw musimy pobrać kilka obrazów.
     $ docker rm ubuntu-shell
     $ docker ps -a
     ```
-    >:exclamation: **Wymagany screenshot 11!**
 
 ### Dodatkowe przydatne komendy
 
