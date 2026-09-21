@@ -3,6 +3,17 @@
 ## Cel laboratorium
 Praktyczna konteneryzacja aplikacji w różnych technologiach: Python/Django, Node.js, Java Spring Boot, PHP. Praca z przykładami z repozytorium.
 
+## Mapa laboratorium (technologie i źródła)
+
+| Część | Technologia | Źródło kodu | Główne polecenie startowe |
+|------|-------------|-------------|---------------------------|
+| 1 | Python/Flask | Tworzone od zera | `docker build -t task-api:v1 . && docker run -d -p 5000:5000 task-api:v1` |
+| 2 | Node.js/Express | `examples/01-nodejs` + od zera | `docker build -t node-app:v1 . && docker run -d -p 3000:3000 node-app:v1` |
+| 3 | Django | `examples/04-django` | `docker compose up -d --build` |
+| 4 | PHP + MySQL | `examples/02-php-mysql` | `docker compose up -d` |
+| 5 | Java Spring Boot | `examples/12-java-spring-boot` | `docker compose up -d --build` |
+| 6 | Go (MSB) | `examples/06-msb` | `docker build -t go-multi -f Dockerfile.multi .` |
+
 ## Wymagania wstępne
 - Ukończone Laboratorium 1-6
 
@@ -144,7 +155,7 @@ FROM node:20-alpine
 RUN addgroup -S app && adduser -S -G app app
 WORKDIR /app
 COPY package*.json ./
-RUN npm ci --only=production
+RUN npm install --omit=dev
 COPY --chown=app:app . .
 USER app
 EXPOSE 3000
@@ -182,6 +193,17 @@ docker compose down
 
 ```bash
 mkdir -p ~/docker-lab07/django-project && cd ~/docker-lab07/django-project
+# Skopiuj bazową aplikację Django jako punkt startowy
+cp -r /ścieżka/do/repozytorium/supporting-materials/examples/04-django/* .
+```
+
+Schemat docelowego uruchomienia:
+
+```mermaid
+graph LR
+    U[Przeglądarka] --> W[Django web]
+    W --> DB[(PostgreSQL)]
+    W --> V[(pgdata volume)]
 ```
 
 Utwórz `docker-compose.yaml`:
