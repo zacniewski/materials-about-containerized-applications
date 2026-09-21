@@ -344,6 +344,8 @@ docker service ps web
 docker stack deploy -c docker-compose.yml myapp
 ```
 
+> **Uwaga:** `SWMTKN-xxx` to tylko placeholder. W praktyce użyj pełnego tokenu zwróconego przez `docker swarm init` (lub pobranego komendą `docker swarm join-token worker`).
+
 ## 9.8 Logowanie i monitoring w produkcji
 
 ### Centralne logowanie
