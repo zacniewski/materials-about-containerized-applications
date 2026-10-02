@@ -387,7 +387,7 @@ docker run -it --name diff-test ubuntu:22.04 bash
 # Wewnątrz kontenera:
 touch /nowy-plik.txt
 echo "test" > /tmp/dane.txt
-rm /etc/hostname
+rm /etc/issue
 exit
 
 # Sprawdź zmiany
