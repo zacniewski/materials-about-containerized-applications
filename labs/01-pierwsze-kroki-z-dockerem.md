@@ -298,7 +298,7 @@ docker cp plik-z-hosta.txt moj-ubuntu:/tmp/
 docker exec moj-ubuntu cat /tmp/plik-z-hosta.txt
 
 # Utwórz plik w kontenerze
-docker exec moj-ubuntu bash -c "echo 'Witaj z kontenera!' > /tmp/plik-z-kontenera.txt"
+docker exec moj-ubuntu bash -c "echo 'Witaj z kontenera' > /tmp/plik-z-kontenera.txt"
 
 # Skopiuj z kontenera na hosta
 docker cp moj-ubuntu:/tmp/plik-z-kontenera.txt ./
