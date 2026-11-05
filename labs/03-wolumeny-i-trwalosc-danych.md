@@ -29,7 +29,8 @@ docker volume inspect moje-dane
 
 ```bash
 # Zapisz dane w wolumenie
-docker run --rm -v moje-dane:/data ubuntu bash -c "echo 'Dane trwałe!' > /data/plik.txt && date >> /data/plik.txt"
+# Uwaga: zewnętrzne apostrofy — w cudzysłowie "..." znak ! uruchamia rozwijanie historii basha
+docker run --rm -v moje-dane:/data ubuntu bash -c 'echo "Dane trwałe!" > /data/plik.txt && date >> /data/plik.txt'
 
 # Odczytaj dane z innego kontenera
 docker run --rm -v moje-dane:/data ubuntu cat /data/plik.txt
@@ -41,11 +42,11 @@ docker run --rm -v moje-dane:/data ubuntu cat /data/plik.txt
 
 ```bash
 # Bez wolumenu — dane giną
-docker run --name temp ubuntu bash -c "echo 'Dane tymczasowe' > /tmp/dane.txt"
-docker start temp
+# sleep infinity utrzymuje kontener przy życiu, aby można było użyć docker exec
+docker run -d --name temp ubuntu bash -c "echo 'Dane tymczasowe' > /tmp/dane.txt && sleep infinity"
 docker exec temp cat /tmp/dane.txt  # OK — kontener istnieje
 
-docker rm temp
+docker stop temp && docker rm temp   # (lub: docker rm -f temp)
 # Dane zniknęły bezpowrotnie!
 ```
 
@@ -136,7 +137,11 @@ docker run -d --name dev \
 curl http://localhost:5000
 
 # Zmień app.py na hoście (np. "Wersja 2")
-sed -i 's/Wersja 1/Wersja 2/' app.py
+# Uwaga: przy bind mount pojedynczego pliku NIE używaj `sed -i` ani edytorów zapisujących
+# nowy plik — tworzą nowy i-węzeł, a kontener nadal widzi stary plik.
+# Nadpisz zawartość istniejącego pliku:
+sed 's/Wersja 1/Wersja 2/' app.py > app.tmp && cat app.tmp > app.py && rm app.tmp
+# (alternatywa: montuj cały katalog, np. -v $(pwd):/app)
 
 # Flask z debug=True automatycznie przeładuje!
 sleep 2 && curl http://localhost:5000
@@ -385,7 +390,8 @@ docker stop $(docker ps -q) 2>/dev/null
 docker rm $(docker ps -aq) 2>/dev/null
 
 # Usuń nieużywane wolumeny
-docker volume prune -f
+# Od Docker 23 samo `prune` usuwa tylko wolumeny anonimowe — `-a` usuwa też nazwane
+docker volume prune -a -f
 
 # Sprawdź
 docker volume ls
