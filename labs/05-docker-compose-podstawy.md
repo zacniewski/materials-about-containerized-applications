@@ -389,6 +389,23 @@ docker compose down -v
 
 ### Ćwiczenie 5.1: Przegląd komend
 
+> ⚠️ **Uwaga — konflikt portów przy skalowaniu.** W ćwiczeniu 2.1 usługa `app` ma mapowanie `"5000:5000"`, czyli stały port 5000 hosta. Port hosta może zająć tylko jeden kontener, więc przy `--scale app=3` (i później przy `docker compose restart app`) kolejne repliki zgłaszają błąd `Bind for 0.0.0.0:5000 failed: port is already allocated` / `Cannot restart container`.
+>
+> **Przed skalowaniem** zmień w `docker-compose.yaml` sekcję `ports` usługi `app` na jedną z opcji:
+> ```yaml
+>     ports:
+>       - "5000-5002:5000"   # zakres: repliki dostaną porty hosta 5000, 5001, 5002
+> ```
+> albo
+> ```yaml
+>     ports:
+>       - "5000"             # losowy wolny port hosta dla każdej repliki
+> ```
+> Zapis musi być listą (`- "5000"`), a nie `ports: 5000`. Przy porcie losowym aplikacja nie jest dostępna pod `localhost:5000`, a przydzielony port sprawdzisz przez `docker compose ps` lub `docker compose port --index=1 app 5000`.
+> W docelowych wdrożeniach repliki zwykle w ogóle nie publikują portów. Port hosta (np. `"80:80"`) publikuje tylko reverse proxy (np. nginx), które przekazuje ruch do `app:5000` przez wewnętrzną sieć Compose.
+>
+> Zastosuj zmianę poleceniem `docker compose up -d`, zanim wykonasz poniższe komendy.
+
 ```bash
 cd ~/docker-lab05/flask-app
 
@@ -410,12 +427,16 @@ docker compose exec db psql -U postgres -c "SELECT 1;"
 # Run (jednorazowe uruchomienie)
 docker compose run --rm app python -c "print('One-time command')"
 
-# Skalowanie
+# Skalowanie (najpierw zmień mapowanie portów — patrz uwaga poniżej)
 docker compose up -d --scale app=3
 docker compose ps
+docker compose port --index=2 app 5000   # port hosta 2. repliki
 
 # Restart
 docker compose restart app
+
+# Powrót do jednej repliki
+docker compose up -d --scale app=1
 
 # Stop vs Down
 docker compose stop    # zatrzymuje, nie usuwa
