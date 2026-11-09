@@ -292,10 +292,20 @@ dd if=/dev/zero of=node_modules/big-file bs=1M count=50 2>/dev/null
 echo "secret" > .env
 ```
 
+Utwórz `Dockerfile` (bez niego `docker build` zakończy się błędem):
+```dockerfile
+FROM python:3.11-slim
+WORKDIR /app
+COPY . .
+CMD ["python", "app.py"]
+```
+
 Bez `.dockerignore`:
 ```bash
 docker build -t ignore-test:without .
-# Zwróć uwagę na "Sending build context to docker daemon"
+# Zwróć uwagę na rozmiar kontekstu:
+# - BuildKit (domyślny): linia "[internal] load build context" → "transferring context: ...MB"
+# - stary builder: "Sending build context to Docker daemon ...MB"
 ```
 
 Utwórz `.dockerignore`:
@@ -413,12 +423,29 @@ app.get('/', (req, res) => res.send(`Hello from Node.js ${process.version}!`));
 app.listen(3000, () => console.log('Server on port 3000'));
 ```
 
+Wygeneruj plik `package-lock.json` (wymagany przez `npm ci`). Nie trzeba mieć Node.js na hoście — wystarczy kontener:
+```bash
+docker run --rm -v "$PWD":/app -w /app -u "$(id -u):$(id -g)" -e HOME=/tmp node:20-alpine \
+  npm install --package-lock-only
+ls package-lock.json
+```
+
+> 💡 Jeśli masz lokalnie Node.js, możesz zamiast tego użyć `npm install --package-lock-only`.
+
+Utwórz `.dockerignore`, aby lokalne `node_modules` nie nadpisały zależności z etapu builder:
+```
+node_modules
+npm-debug.log
+```
+
+Utwórz `Dockerfile`:
+
 ```dockerfile
 # Stage 1: Install dependencies
 FROM node:20-alpine AS builder
 WORKDIR /app
 COPY package*.json ./
-RUN npm ci --only=production
+RUN npm ci --omit=dev
 
 # Stage 2: Production
 FROM node:20-alpine
