@@ -245,14 +245,16 @@ docker run -d --name mongo \
 sleep 5
 
 docker exec -it mongo mongosh -u admin -p secret --eval "
-use testdb;
+db = db.getSiblingDB('testdb');
 db.users.insertMany([
     {name: 'Jan', age: 25},
     {name: 'Anna', age: 30}
 ]);
-db.users.find().pretty();
+db.users.find();
 "
 ```
+
+> ℹ️ **Dlaczego nie `use testdb;`?** `use` to pomocnicza komenda interaktywnej powłoki, a nie JavaScript. W trybie `--eval` jej użycie powoduje, że wyświetlany jest tylko wynik tej komendy (`switched to db testdb`) zamiast wyniku wszystkich poleceń. Dlatego bazę wybieramy funkcją `db.getSiblingDB('testdb')`. Pominięto też przestarzałe `.pretty()` — `mongosh` domyślnie formatuje wyniki czytelnie.
 
 ---
 
