@@ -364,8 +364,13 @@ docker stop $(docker ps -q) 2>/dev/null
 # Usuń wszystkie kontenery
 docker rm $(docker ps -aq) 2>/dev/null
 
-# Usuń nieużywane zasoby
+# Usuń nieużywane zasoby (kontenery, sieci, wszystkie nieużywane obrazy, cache budowania
+# oraz wolumeny anonimowe)
 docker system prune -a --volumes -f
+
+# Usuń również nieużywane wolumeny nazwane — od Dockera 23 `system prune --volumes`
+# usuwa tylko wolumeny anonimowe (flaga -a dotyczy tam wyłącznie obrazów)
+docker volume prune -a -f
 
 # Sprawdź
 docker system df
